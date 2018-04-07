@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using FastColoredTextBoxNS;
+using FastColoredTextBoxNS.Models.Syntaxes;
 using Tester.DiffMergeStuffs;
 
 namespace Tester
@@ -95,11 +96,11 @@ namespace Tester
             fctb2.Clear();
 
             Cursor = Cursors.WaitCursor;
-           
-            if (Path.GetExtension(tbFirstFile.Text).ToLower() == ".cs")
-                fctb1.LanguageEnum = fctb2.LanguageEnum = Language.CSharp;
-            else
-                fctb1.LanguageEnum = fctb2.LanguageEnum = Language.Custom;
+
+			if (Path.GetExtension(tbFirstFile.Text).ToLower() == ".cs")
+				fctb1.Language = new CSharpSyntax();
+			else
+				fctb1.Language = new CustomSyntax();
 
             var source1 = Lines.Load(tbFirstFile.Text);
             var source2 = Lines.Load(tbSecondFile.Text);

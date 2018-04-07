@@ -49,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutocompleteItem.cs" />
+    <Compile Include="Models\Syntaxes\CSharpSyntax.cs" />
+    <Compile Include="Models\Syntaxes\XmlSyntax.cs" />
+    <Compile Include="Models\Syntaxes\HtmlSyntax.cs" />
     <Compile Include="Views\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>

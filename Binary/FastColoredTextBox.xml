@@ -637,11 +637,6 @@
             Fast colored textbox
             </summary>
         </member>
-        <member name="M:FastColoredTextBoxNS.FastColoredTextBox.#ctor">
-            <summary>
-            Constructor
-            </summary>
-        </member>
         <member name="P:FastColoredTextBoxNS.FastColoredTextBox.AutoCompleteBrackets">
             <summary>
             AutoComplete brackets
@@ -985,11 +980,6 @@
         <member name="P:FastColoredTextBoxNS.FastColoredTextBox.DelayedTextChangedInterval">
             <summary>
             Minimal delay(ms) for TextChangedDelayed event.
-            </summary>
-        </member>
-        <member name="P:FastColoredTextBoxNS.FastColoredTextBox.LanguageEnum">
-            <summary>
-            Language for highlighting by built-in highlighter.
             </summary>
         </member>
         <member name="P:FastColoredTextBoxNS.FastColoredTextBox.Language">

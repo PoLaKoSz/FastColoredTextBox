@@ -40,7 +40,7 @@ namespace Tester
 		{
             if (fctb.Text.Trim().StartsWith("<?xml"))
             {
-                fctb.LanguageEnum = Language.XML;
+				fctb.Language = new XmlSyntax();
 
                 fctb.ClearStylesBuffer();
                 fctb.Range.ClearStyle(StyleIndex.All);
@@ -80,8 +80,8 @@ namespace Tester
             {
                 //For example, we will highlight the syntax of C# manually, although could use built-in highlighter
                 case "CSharp (custom highlighter)":
-                    fctb.LanguageEnum = Language.Custom;
-                    fctb.CommentPrefix = "//";
+					fctb.Language = new CustomSyntax();
+					fctb.CommentPrefix = "//";
                     fctb.AutoIndentNeeded += fctb_AutoIndentNeeded;
                     //call OnTextChanged for refresh syntax highlighting
                     fctb.OnTextChanged();
