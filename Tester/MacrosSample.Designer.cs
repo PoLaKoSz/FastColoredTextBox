@@ -1,4 +1,6 @@
-﻿namespace Tester
+﻿using FastColoredTextBoxNS.Models.Syntaxes;
+
+namespace Tester
 {
     partial class MacrosSample
     {
@@ -55,7 +57,7 @@
             this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fctb.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.fctb.IsReplaceMode = false;
-            this.fctb.LanguageEnum = FastColoredTextBoxNS.Language.CSharp;
+			this.fctb.Language = new CSharpSyntax();
             this.fctb.Location = new System.Drawing.Point(0, 256);
             this.fctb.Name = "fctb";
             this.fctb.PaddingBackColor = System.Drawing.Color.WhiteSmoke;

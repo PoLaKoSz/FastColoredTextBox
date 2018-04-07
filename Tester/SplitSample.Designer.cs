@@ -1,4 +1,6 @@
-﻿namespace Tester
+﻿using FastColoredTextBoxNS.Models.Syntaxes;
+
+namespace Tester
 {
     partial class SplitSample
     {
@@ -94,8 +96,8 @@
             this.fctbMaster.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fctbMaster.Font = new System.Drawing.Font("Consolas", 9.75F);
             this.fctbMaster.IsReplaceMode = false;
-            this.fctbMaster.LanguageEnum = FastColoredTextBoxNS.Language.CSharp;
-            this.fctbMaster.Location = new System.Drawing.Point(0, 93);
+			this.fctbMaster.Language = new CSharpSyntax();
+			this.fctbMaster.Location = new System.Drawing.Point(0, 93);
             this.fctbMaster.Name = "fctbMaster";
             this.fctbMaster.Paddings = new System.Windows.Forms.Padding(0);
             this.fctbMaster.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
@@ -131,7 +133,7 @@
             this.fctbSlave.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.fctbSlave.Font = new System.Drawing.Font("Consolas", 9.75F);
             this.fctbSlave.IsReplaceMode = false;
-            this.fctbSlave.LanguageEnum = FastColoredTextBoxNS.Language.CSharp;
+			this.fctbSlave.Language = new CSharpSyntax();
             this.fctbSlave.Location = new System.Drawing.Point(0, 304);
             this.fctbSlave.Name = "fctbSlave";
             this.fctbSlave.Paddings = new System.Windows.Forms.Padding(0);

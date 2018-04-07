@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using FastColoredTextBoxNS.Models.Syntaxes;
 
 namespace Tester
 {
@@ -43,7 +44,7 @@ namespace Tester
 
             if(cbAutoIndentType.SelectedIndex == 1)//custom AutoIndent
             {
-                fctb.LanguageEnum = Language.Custom;
+				fctb.Language = new CustomSyntax();
                 fctb.AutoIndentNeeded += new EventHandler<AutoIndentEventArgs>(fctb_AutoIndentNeeded);
                 fctb.Text = @"/// Please, type next text (without slashes):
 /// begin

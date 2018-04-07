@@ -1,4 +1,6 @@
-﻿namespace Tester
+﻿using FastColoredTextBoxNS.Models.Syntaxes;
+
+namespace Tester
 {
     partial class AutoIndentSample
     {
@@ -61,8 +63,8 @@
             this.fctb.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fctb.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.fctb.LanguageEnum = FastColoredTextBoxNS.Language.CSharp;
-            this.fctb.Location = new System.Drawing.Point(0, 75);
+			this.fctb.Language = new CSharpSyntax();
+			this.fctb.Location = new System.Drawing.Point(0, 75);
             this.fctb.Name = "fctb";
             this.fctb.Paddings = new System.Windows.Forms.Padding(0);
             this.fctb.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));

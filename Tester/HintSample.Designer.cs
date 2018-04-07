@@ -1,4 +1,6 @@
-﻿namespace Tester
+﻿using FastColoredTextBoxNS.Models.Syntaxes;
+
+namespace Tester
 {
     partial class HintSample
     {
@@ -145,8 +147,8 @@
             this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fctb.Font = new System.Drawing.Font("Consolas", 9.75F);
             this.fctb.IsReplaceMode = false;
-            this.fctb.LanguageEnum = FastColoredTextBoxNS.Language.CSharp;
-            this.fctb.Location = new System.Drawing.Point(0, 87);
+			this.fctb.Language = new CSharpSyntax();
+			this.fctb.Location = new System.Drawing.Point(0, 87);
             this.fctb.Name = "fctb";
             this.fctb.PaddingBackColor = System.Drawing.Color.WhiteSmoke;
             this.fctb.Paddings = new System.Windows.Forms.Padding(10);

@@ -12,6 +12,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Drawing.Drawing2D;
+using FastColoredTextBoxNS.Models.Syntaxes;
 
 namespace Tester
 {
@@ -61,8 +62,8 @@ namespace Tester
                 tb.BorderStyle = BorderStyle.Fixed3D;
                 //tb.VirtualSpace = true;
                 tb.LeftPadding = 17;
-                tb.LanguageEnum = Language.CSharp;
-                tb.AddStyle(sameWordsStyle);//same words style
+				tb.Language = new CSharpSyntax();
+				tb.AddStyle(sameWordsStyle);//same words style
                 var tab = new FATabStripItem(fileName!=null?Path.GetFileName(fileName):"[new]", tb);
                 tab.Tag = fileName;
                 if (fileName != null)

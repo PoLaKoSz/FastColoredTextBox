@@ -1,4 +1,6 @@
-﻿namespace Tester
+﻿using FastColoredTextBoxNS.Models.Syntaxes;
+
+namespace Tester
 {
     partial class DocumentMapSample
     {
@@ -55,8 +57,8 @@
             this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fctb.Font = new System.Drawing.Font("Consolas", 9.75F);
             this.fctb.IsReplaceMode = false;
-            this.fctb.LanguageEnum = FastColoredTextBoxNS.Language.CSharp;
-            this.fctb.Location = new System.Drawing.Point(0, 0);
+			this.fctb.Language = new CSharpSyntax();
+			this.fctb.Location = new System.Drawing.Point(0, 0);
             this.fctb.Name = "fctb";
             this.fctb.Paddings = new System.Windows.Forms.Padding(0);
             this.fctb.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
