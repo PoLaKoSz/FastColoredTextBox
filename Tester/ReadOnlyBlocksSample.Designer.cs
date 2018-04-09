@@ -51,7 +51,6 @@ namespace Tester
             // 
             this.fctb.AutoScrollMinSize = new System.Drawing.Size(410, 105);
             this.fctb.BackBrush = null;
-            this.fctb.CommentPrefix = null;
             this.fctb.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fctb.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;

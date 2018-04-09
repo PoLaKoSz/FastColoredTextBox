@@ -49,9 +49,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutocompleteItem.cs" />
+    <Compile Include="Events\AutoIndentEventArgs.cs" />
+    <Compile Include="Events\CustomActionEventArgs.cs" />
+    <Compile Include="Events\HintClickEventArgs.cs" />
+    <Compile Include="Events\LineInsertedEventArgs.cs" />
+    <Compile Include="Events\LineRemovedEventArgs.cs" />
+    <Compile Include="Events\PaintLineEventArgs.cs" />
+    <Compile Include="Events\TextChangedEventArgs.cs" />
+    <Compile Include="Events\TextChangingEventArgs.cs" />
+    <Compile Include="Events\ToolTipNeededEventArgs.cs" />
+    <Compile Include="Events\WordWrapNeededEventArgs.cs" />
+    <Compile Include="Models\LineYComparer.cs" />
+    <Compile Include="Models\PrintDialogSettings.cs" />
     <Compile Include="Models\Syntaxes\CSharpSyntax.cs" />
     <Compile Include="Models\Syntaxes\XmlSyntax.cs" />
     <Compile Include="Models\Syntaxes\HtmlSyntax.cs" />
+    <Compile Include="Models\ServiceColors.cs" />
     <Compile Include="Views\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -89,10 +102,10 @@
     <Compile Include="Models\Syntaxes\Rule.cs" />
     <Compile Include="PlatformType.cs" />
     <Compile Include="Hotkeys.cs" />
-    <Compile Include="Ruler.cs">
+    <Compile Include="Views\Ruler.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Ruler.Designer.cs">
+    <Compile Include="Views\Ruler.Designer.cs">
       <DependentUpon>Ruler.cs</DependentUpon>
     </Compile>
     <Compile Include="StaticResources\Styles.cs" />
@@ -124,7 +137,7 @@
     <Compile Include="TextSource.cs" />
     <Compile Include="TypeDescriptor.cs" />
     <Compile Include="FileTextSource.cs" />
-    <Compile Include="UnfocusablePanel.cs">
+    <Compile Include="Views\UnfocusablePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="VisualMarker.cs" />
@@ -150,6 +163,7 @@
   <ItemGroup>
     <None Include="FCTB_key.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

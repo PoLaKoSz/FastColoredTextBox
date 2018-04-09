@@ -81,7 +81,6 @@ namespace Tester
                 //For example, we will highlight the syntax of C# manually, although could use built-in highlighter
                 case "CSharp (custom highlighter)":
 					fctb.Language = new CustomSyntax();
-					fctb.CommentPrefix = "//";
                     fctb.AutoIndentNeeded += fctb_AutoIndentNeeded;
                     //call OnTextChanged for refresh syntax highlighting
                     fctb.OnTextChanged();
@@ -361,12 +360,12 @@ namespace Tester
 
         private void commentSelectedLinesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fctb.InsertLinePrefix(fctb.CommentPrefix);
+            fctb.InsertLinePrefix(fctb.Language.CommentPrefix);
         }
 
         private void uncommentSelectedLinesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fctb.RemoveLinePrefix(fctb.CommentPrefix);
+            fctb.RemoveLinePrefix(fctb.Language.CommentPrefix);
         }
     }
 }

@@ -41,10 +41,10 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace FastColoredTextBoxNS
 {
-    /// <summary>
-    /// Fast colored textbox
-    /// </summary>
-    public partial class FastColoredTextBox : UserControl, ISupportInitialize
+	/// <summary>
+	/// Fast colored textbox
+	/// </summary>
+	public partial class FastColoredTextBox : UserControl, ISupportInitialize
     {
         internal const int minLeftIndent = 8;
         private const int maxBracketSearchIterations = 1000;
@@ -82,7 +82,6 @@ namespace FastColoredTextBoxNS
         private bool isChanged;
         private bool isLineSelect;
         private bool isReplaceMode;
-        private Language language;
         private ILanguage _language;
         private Keys lastModifiers;
         private Point lastMouseCoord;
@@ -178,7 +177,6 @@ namespace FastColoredTextBoxNS
             lastNavigatedDateTime = DateTime.Now;
             AutoIndent = true;
             AutoIndentExistingLines = true;
-            CommentPrefix = "//";
             lineNumberStartValue = 1;
             multiline = true;
             scrollBars = true;
@@ -212,7 +210,7 @@ namespace FastColoredTextBoxNS
             AutoIndentChars = true;
             CaretBlinking = true;
             ServiceColors = new ServiceColors();
-            //
+
             base.AutoScroll = true;
             timer.Tick += timer_Tick;
             timer2.Tick += timer2_Tick;
@@ -549,12 +547,8 @@ namespace FastColoredTextBoxNS
         /// </summary>
         [DefaultValue(false)]
         public bool ReadOnly { get; set; }
-
-        /// <summary>
-        /// Shows line numbers.
-        /// </summary>
+		
         [DefaultValue(true)]
-        [Description("Shows line numbers.")]
         public bool ShowLineNumbers
         {
             get { return showLineNumbers; }
@@ -599,12 +593,8 @@ namespace FastColoredTextBoxNS
                 return rect;
             }
         }
-
-        /// <summary>
-        /// Color of line numbers.
-        /// </summary>
+		
         [DefaultValue(typeof (Color), "Teal")]
-        [Description("Color of line numbers.")]
         public Color LineNumberColor
         {
             get { return lineNumberColor; }
@@ -854,13 +844,6 @@ namespace FastColoredTextBoxNS
         /// </summary>
         [Browsable(false)]
         public MarkerStyle BracketsStyle2 { get; set; }
-	
-        /// <summary>
-        /// Comment line prefix.
-        /// </summary>
-        [DefaultValue("//")]
-        [Description("Comment line prefix.")]
-        public string CommentPrefix { get; set; }
 
         /// <summary>
         /// This property specifies which part of the text will be highlighted as you type (by built-in highlighter).
@@ -4197,7 +4180,7 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public void CommentSelected()
         {
-            CommentSelected(CommentPrefix);
+            CommentSelected(Language.CommentPrefix);
         }
 
         /// <summary>
@@ -7991,7 +7974,7 @@ window.status = ""#print"";
             OnScroll(yea);
         }
 
-        [DllImport("user32.dll")]
+		[DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
         private const int WM_SETREDRAW = 0xB;
 
@@ -8120,135 +8103,8 @@ window.status = ""#print"";
             var points = new Point[] { new Point(size, 2 * size), new Point(0, 3 * size), new Point(-size, 2 * size) };
             g.FillPolygon(brush, points);
         }
-
-        #endregion
-
-
-        #region Nested type: LineYComparer
-
-        private class LineYComparer : IComparer<LineInfo>
-        {
-            private readonly int Y;
-
-            public LineYComparer(int Y)
-            {
-                this.Y = Y;
-            }
-
-            #region IComparer<LineInfo> Members
-
-            public int Compare(LineInfo x, LineInfo y)
-            {
-                if (x.startY == -10)
-                    return -y.startY.CompareTo(Y);
-                else
-                    return x.startY.CompareTo(Y);
-            }
-
-            #endregion
-        }
-
-        #endregion
-    }
-
-    public class PaintLineEventArgs : PaintEventArgs
-    {
-        public PaintLineEventArgs(int iLine, Rectangle rect, Graphics gr, Rectangle clipRect) : base(gr, clipRect)
-        {
-            LineIndex = iLine;
-            LineRect = rect;
-        }
-
-        public int LineIndex { get; private set; }
-        public Rectangle LineRect { get; private set; }
-    }
-
-    public class LineInsertedEventArgs : EventArgs
-    {
-        public LineInsertedEventArgs(int index, int count)
-        {
-            Index = index;
-            Count = count;
-        }
-
-        /// <summary>
-        /// Inserted line index
-        /// </summary>
-        public int Index { get; private set; }
-
-        /// <summary>
-        /// Count of inserted lines
-        /// </summary>
-        public int Count { get; private set; }
-    }
-
-    public class LineRemovedEventArgs : EventArgs
-    {
-        public LineRemovedEventArgs(int index, int count, List<int> removedLineIds)
-        {
-            Index = index;
-            Count = count;
-            RemovedLineUniqueIds = removedLineIds;
-        }
-
-        /// <summary>
-        /// Removed line index
-        /// </summary>
-        public int Index { get; private set; }
-
-        /// <summary>
-        /// Count of removed lines
-        /// </summary>
-        public int Count { get; private set; }
-
-        /// <summary>
-        /// UniqueIds of removed lines
-        /// </summary>
-        public List<int> RemovedLineUniqueIds { get; private set; }
-    }
-
-    /// <summary>
-    /// TextChanged event argument
-    /// </summary>
-    public class TextChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public TextChangedEventArgs(Range changedRange)
-        {
-            ChangedRange = changedRange;
-        }
-
-        /// <summary>
-        /// This range contains changed area of text
-        /// </summary>
-        public Range ChangedRange { get; set; }
-    }
-
-    public class TextChangingEventArgs : EventArgs
-    {
-        public string InsertingText { get; set; }
-
-        /// <summary>
-        /// Set to true if you want to cancel text inserting
-        /// </summary>
-        public bool Cancel { get; set; }
-    }
-
-    public class WordWrapNeededEventArgs : EventArgs
-    {
-        public List<int> CutOffPositions { get; private set;}
-        public bool ImeAllowed { get; private set;}
-        public Line Line { get; private set; }
-
-        public WordWrapNeededEventArgs(List<int> cutOffPositions, bool imeAllowed, Line line)
-        {
-            this.CutOffPositions = cutOffPositions;
-            this.ImeAllowed = imeAllowed;
-            this.Line = line;
-        }
-    }
+		#endregion
+	}
 
     public enum WordWrapMode
     {
@@ -8276,77 +8132,6 @@ window.status = ""#print"";
         /// Custom wrap (by event WordWrapNeeded)
         /// </summary>
         Custom
-    }
-
-    public class PrintDialogSettings
-    {
-        public PrintDialogSettings()
-        {
-            ShowPrintPreviewDialog = true;
-            Title = "";
-            Footer = "";
-            Header = "";
-        }
-
-        public bool ShowPageSetupDialog { get; set; }
-        public bool ShowPrintDialog { get; set; }
-        public bool ShowPrintPreviewDialog { get; set; }
-
-        /// <summary>
-        /// Title of page. If you want to print Title on the page, insert code &amp;w in Footer or Header.
-        /// </summary>
-        public string Title { get; set; }
-
-        /// <summary>
-        /// Footer of page.
-        /// Here you can use special codes: &amp;w (Window title), &amp;D, &amp;d (Date), &amp;t(), &amp;4 (Time), &amp;p (Current page number), &amp;P (Total number of pages),  &amp;&amp; (A single ampersand), &amp;b (Right justify text, Center text. If &amp;b occurs once, then anything after the &amp;b is right justified. If &amp;b occurs twice, then anything between the two &amp;b is centered, and anything after the second &amp;b is right justified).
-        /// More detailed see <see cref="http://msdn.microsoft.com/en-us/library/aa969429(v=vs.85).aspx">here</see>
-        /// </summary>
-        public string Footer { get; set; }
-
-        /// <summary>
-        /// Header of page
-        /// Here you can use special codes: &amp;w (Window title), &amp;D, &amp;d (Date), &amp;t(), &amp;4 (Time), &amp;p (Current page number), &amp;P (Total number of pages),  &amp;&amp; (A single ampersand), &amp;b (Right justify text, Center text. If &amp;b occurs once, then anything after the &amp;b is right justified. If &amp;b occurs twice, then anything between the two &amp;b is centered, and anything after the second &amp;b is right justified).
-        /// More detailed see <see cref="http://msdn.microsoft.com/en-us/library/aa969429(v=vs.85).aspx">here</see>
-        /// </summary>
-        public string Header { get; set; }
-
-        /// <summary>
-        /// Prints line numbers
-        /// </summary>
-        public bool IncludeLineNumbers { get; set; }
-    }
-
-    public class AutoIndentEventArgs : EventArgs
-    {
-        public AutoIndentEventArgs(int iLine, string lineText, string prevLineText, int tabLength, int currentIndentation)
-        {
-            this.iLine = iLine;
-            LineText = lineText;
-            PrevLineText = prevLineText;
-            TabLength = tabLength;
-            AbsoluteIndentation = currentIndentation;
-        }
-
-        public int iLine { get; internal set; }
-        public int TabLength { get; internal set; }
-        public string LineText { get; internal set; }
-        public string PrevLineText { get; internal set; }
-
-        /// <summary>
-        /// Additional spaces count for this line, relative to previous line
-        /// </summary>
-        public int Shift { get; set; }
-
-        /// <summary>
-        /// Additional spaces count for next line, relative to previous line
-        /// </summary>
-        public int ShiftNextLines { get; set; }
-
-        /// <summary>
-        /// Absolute indentation of current line. You can change this property if you want to set absolute indentation.
-        /// </summary>
-        public int AbsoluteIndentation { get; set; }
     }
 
     /// <summary>
@@ -8388,50 +8173,6 @@ window.status = ""#print"";
         Strategy2
     }
 
-    /// <summary>
-    /// ToolTipNeeded event args
-    /// </summary>
-    public class ToolTipNeededEventArgs : EventArgs
-    {
-        public ToolTipNeededEventArgs(Place place, string hoveredWord)
-        {
-            HoveredWord = hoveredWord;
-            Place = place;
-        }
-
-        public Place Place { get; private set; }
-        public string HoveredWord { get; private set; }
-        public string ToolTipTitle { get; set; }
-        public string ToolTipText { get; set; }
-        public ToolTipIcon ToolTipIcon { get; set; }
-    }
-
-    /// <summary>
-    /// HintClick event args
-    /// </summary>
-    public class HintClickEventArgs : EventArgs
-    {
-        public HintClickEventArgs(Hint hint)
-        {
-            Hint = hint;
-        }
-
-        public Hint Hint { get; private set; }
-    }
-
-    /// <summary>
-    /// CustomAction event args
-    /// </summary>
-    public class CustomActionEventArgs : EventArgs
-    {
-        public FCTBAction Action { get; private set; }
-
-        public CustomActionEventArgs(FCTBAction action)
-        {
-            Action = action;
-        }
-    }
-
     public enum TextAreaBorderType
     {
         None,
@@ -8447,27 +8188,6 @@ window.status = ""#print"";
         Right = 2,
         Up = 4,
         Down = 8
-    }
-
-    [Serializable]
-    public class ServiceColors
-    {
-        public Color CollapseMarkerForeColor { get; set; }
-        public Color CollapseMarkerBackColor { get; set; }
-        public Color CollapseMarkerBorderColor { get; set; }
-        public Color ExpandMarkerForeColor { get; set; }
-        public Color ExpandMarkerBackColor { get; set; }
-        public Color ExpandMarkerBorderColor { get; set; }
-
-        public ServiceColors()
-        {
-            CollapseMarkerForeColor = Color.Silver;
-            CollapseMarkerBackColor = Color.White;
-            CollapseMarkerBorderColor = Color.Silver;
-            ExpandMarkerForeColor = Color.Red;
-            ExpandMarkerBackColor = Color.White;
-            ExpandMarkerBorderColor = Color.Silver;
-        }
     }
 
 #if Styles32
@@ -8541,5 +8261,4 @@ window.status = ""#print"";
         All = 0xffff
     }
 #endif
-
 }
