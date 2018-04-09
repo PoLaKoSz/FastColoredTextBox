@@ -48,7 +48,6 @@ namespace FastColoredTextBoxNS
         public virtual void HighlightSyntax(ILanguage language, Range range)
         {
             range.tb.BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
-            range.tb.AutoIndentCharsPatterns   = language.AutoIndentCharsPatterns;
             
             range.ClearStyle(language.GetStyles());
 

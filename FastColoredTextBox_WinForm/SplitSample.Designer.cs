@@ -84,8 +84,6 @@ namespace Tester
         '\"',
         '\'',
         '\''};
-            this.fctbMaster.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
-    "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
             this.fctbMaster.AutoScrollMinSize = new System.Drawing.Size(284, 255);
             this.fctbMaster.BackBrush = null;
             this.fctbMaster.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
@@ -121,8 +119,6 @@ namespace Tester
         '\"',
         '\'',
         '\''};
-            this.fctbSlave.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
-    "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
             this.fctbSlave.AutoScrollMinSize = new System.Drawing.Size(0, 255);
             this.fctbSlave.BackBrush = null;
             this.fctbSlave.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;

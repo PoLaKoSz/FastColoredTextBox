@@ -123,8 +123,6 @@ namespace Tester
         '\"',
         '\'',
         '\''};
-            this.fctb.AutoIndentCharsPatterns = "\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\n^\\s*(case|default)\\s*[^:]*(" +
-    "?<range>:)\\s*(?<range>[^;]+);\n";
             this.fctb.AutoScrollMinSize = new System.Drawing.Size(284, 315);
             this.fctb.BackBrush = null;
             this.fctb.BackColor = System.Drawing.Color.Gold;

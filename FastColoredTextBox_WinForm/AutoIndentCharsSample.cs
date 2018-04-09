@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using FastColoredTextBoxNS.Models.Syntaxes;
+using System.Windows.Forms;
 
 namespace Tester
 {
@@ -7,8 +8,7 @@ namespace Tester
         public AutoIndentCharsSample()
         {
             InitializeComponent();
-            fctb.AutoIndentChars = true;
-            fctb.AutoIndentCharsPatterns = @"^\s*\w+\s+(?<range>[^,]+)\s*,?\s*(?<range>.+)?";
+			fctb.Language = new LuaSyntax();
         }
     }
 }

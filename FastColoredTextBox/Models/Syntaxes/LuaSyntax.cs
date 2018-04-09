@@ -49,11 +49,11 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
 
             BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
 
-            AutoIndentCharsPatterns = @"^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>.+)";
+            AutoIndentCharsPatterns = "";
 
             FoldingMarkers = new List<Marker>()
             {
-                new Marker(      "{",     "}"),            // allow to collapse brackets block
+                new Marker(      "{",     "}"),  // allow to collapse brackets block
                 new Marker(@"--\[\[", @"\]\]"),  // allow to collapse comment block
             };
         }

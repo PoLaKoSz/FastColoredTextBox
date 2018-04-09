@@ -206,7 +206,6 @@ namespace FastColoredTextBoxNS
             WordWrapAutoIndent = true;
             FoldedBlocks = new Dictionary<int, int>();
             AutoCompleteBrackets = false;
-            AutoIndentCharsPatterns = @"^\s*[\w\.]+\s*(?<range>=)\s*(?<range>[^;]+);";
             AutoIndentChars = true;
             CaretBlinking = true;
             ServiceColors = new ServiceColors();
@@ -4350,24 +4349,14 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Enables AutoIndentChars mode
         /// </summary>
-        [Description("Enables AutoIndentChars mode")]
-        [DefaultValue(true)]
         public bool AutoIndentChars { get; set; }
-
-        /// <summary>
-        /// Regex patterns for AutoIndentChars (one regex per line)
-        /// </summary>
-        [Description("Regex patterns for AutoIndentChars (one regex per line)")]
-        [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-        [DefaultValue(@"^\s*[\w\.]+\s*(?<range>=)\s*(?<range>[^;]+);")]
-        public string AutoIndentCharsPatterns { get; set; }
 
         /// <summary>
         /// Do AutoIndentChars
         /// </summary>
         public void DoAutoIndentChars(int iLine)
         {
-            var patterns = AutoIndentCharsPatterns.Split(new char[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+            var patterns = Language.AutoIndentCharsPatterns.Split(new char[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var pattern in patterns)
             {
