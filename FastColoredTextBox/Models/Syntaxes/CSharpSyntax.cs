@@ -6,7 +6,7 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
     public class CSharpSyntax : Syntax
     {
         public CSharpSyntax()
-			: base("C#")
+			: base("C#", "cs")
         {
 			Keywords = new List<string>()
 			{

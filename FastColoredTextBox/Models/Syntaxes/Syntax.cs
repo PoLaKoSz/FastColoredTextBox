@@ -6,6 +6,7 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
 	public abstract class Syntax : ILanguage
 	{
 		public string Name { get; protected set; }
+		public string Extension { get; protected set; }
 		public List<Rule> Rules { get; protected set; }
 		public string CommentPrefix { get; protected set; }
 
@@ -54,9 +55,10 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
 
 
 
-		public Syntax(string syntaxName)
+		public Syntax(string syntaxName, string extensionName)
 		{
-			Name = syntaxName;
+			Name      = syntaxName;
+			Extension = extensionName;
 
 			Rules = new List<Rule>()
 			{

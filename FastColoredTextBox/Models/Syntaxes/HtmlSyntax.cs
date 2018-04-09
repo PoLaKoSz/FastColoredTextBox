@@ -5,7 +5,7 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
 	public class HtmlSyntax : Syntax
 	{
 		public HtmlSyntax()
-			: base("HTML")
+			: base("HTML", "html")
 		{
 			CommentPrefix = "//";
 		}

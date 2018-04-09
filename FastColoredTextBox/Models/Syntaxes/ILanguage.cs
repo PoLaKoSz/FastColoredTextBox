@@ -2,9 +2,12 @@
 
 namespace FastColoredTextBoxNS.Models.Syntaxes
 {
-    public interface ILanguage : ISyntax
-    {
-        List<Rule> Rules { get; }
+    public interface ILanguage
+	{
+		string Name { get; }
+		string Extension { get; }
+
+		List<Rule> Rules { get; }
 
         string CommentPrefix { get; }
 

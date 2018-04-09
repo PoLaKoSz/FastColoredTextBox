@@ -5,7 +5,7 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
     public class CustomSyntax : Syntax
     {
         public CustomSyntax()
-			: base("Custom")
+			: base("Custom", "")
         {
 			BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy1;
         }

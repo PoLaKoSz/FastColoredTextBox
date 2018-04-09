@@ -6,7 +6,7 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
     public class LuaSyntax : Syntax
     {
         public LuaSyntax()
-			: base("Lua")
+			: base("Lua", "lua")
         {
 			Keywords      = new List<string>()
 			{

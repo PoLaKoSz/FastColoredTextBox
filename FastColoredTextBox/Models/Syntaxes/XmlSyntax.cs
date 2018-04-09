@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace FastColoredTextBoxNS.Models.Syntaxes
 {
 	public class XmlSyntax : Syntax
 	{
 		public XmlSyntax()
-			: base("XML")
-		{
-			CommentPrefix = "//";
-		}
+			: base("XML", "xml")
+		{ }
 	}
 }
