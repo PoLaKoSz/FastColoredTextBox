@@ -70,8 +70,6 @@
     </Compile>
     <Compile Include="Bookmarks.cs" />
     <Compile Include="Models\Char.cs" />
-    <Compile Include="Controllers\IXmlDocParser.cs" />
-    <Compile Include="Controllers\XmlDocParser.cs" />
     <Compile Include="DocumentMap.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -4179,23 +4179,18 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public void CommentSelected()
         {
-            CommentSelected(Language.CommentPrefix);
-        }
+			if (string.IsNullOrEmpty(Language.CommentPrefix))
+				return;
 
-        /// <summary>
-        /// Insert/remove comment prefix into selected lines
-        /// </summary>
-        public virtual void CommentSelected(string commentPrefix)
-        {
-            if (string.IsNullOrEmpty(commentPrefix))
-                return;
-            Selection.Normalize();
-            bool isCommented = lines[Selection.Start.iLine].Text.TrimStart().StartsWith(commentPrefix);
-            if (isCommented)
-                RemoveLinePrefix(commentPrefix);
-            else
-                InsertLinePrefix(commentPrefix);
-        }
+			Selection.Normalize();
+
+			bool isCommented = lines[Selection.Start.iLine].Text.TrimStart().StartsWith(Language.CommentPrefix);
+
+			if (isCommented)
+				RemoveLinePrefix(Language.CommentPrefix);
+			else
+				InsertLinePrefix(Language.CommentPrefix);
+		}
 
         public void OnKeyPressing(KeyPressEventArgs args)
         {
@@ -4644,10 +4639,7 @@ namespace FastColoredTextBoxNS
 
             EventHandler<AutoIndentEventArgs> calculator = AutoIndentNeeded;
             if (calculator == null)
-                if (SyntaxHighlighter != null)
-                    calculator = SyntaxHighlighter.AutoIndentNeeded;
-                else
-                    calculator = CalcAutoIndentShiftByCodeFolding;
+                calculator = SyntaxHighlighter.AutoIndentNeeded;
 
             int needSpaces = 0;
 
@@ -4678,27 +4670,7 @@ namespace FastColoredTextBoxNS
 
             return needSpaces;
         }
-
-        internal virtual void CalcAutoIndentShiftByCodeFolding(object sender, AutoIndentEventArgs args)
-        {
-            //inset TAB after start folding marker
-            if (string.IsNullOrEmpty(lines[args.iLine].FoldingEndMarker) &&
-                !string.IsNullOrEmpty(lines[args.iLine].FoldingStartMarker))
-            {
-                args.ShiftNextLines = TabLength;
-                return;
-            }
-            //remove TAB before end folding marker
-            if (!string.IsNullOrEmpty(lines[args.iLine].FoldingEndMarker) &&
-                string.IsNullOrEmpty(lines[args.iLine].FoldingStartMarker))
-            {
-                args.Shift = -TabLength;
-                args.ShiftNextLines = -TabLength;
-                return;
-            }
-        }
-
-
+		
         protected int GetMinStartSpacesCount(int fromLine, int toLine)
         {
             if (fromLine > toLine)
@@ -7315,11 +7287,9 @@ window.status = ""#print"";
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+
             if (disposing)
             {
-                if (SyntaxHighlighter != null)
-                    SyntaxHighlighter.Dispose();
-
                 timer.Dispose();
                 timer2.Dispose();
 
