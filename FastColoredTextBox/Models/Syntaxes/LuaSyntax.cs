@@ -3,45 +3,78 @@ using System.Text.RegularExpressions;
 
 namespace FastColoredTextBoxNS.Models.Syntaxes
 {
-    public class LuaSyntax : ILanguage
+    public class LuaSyntax : Syntax //ILanguage
     {
-        public List<Rule> Rules { get; protected set; }
-
-		public string Name { get; protected set; }
-
-        public string CommentPrefix { get; protected set; }
-
-        public char LeftBracket { get; set; }
-        public char RightBracket { get; set; }
-
-        public char LeftBracket2 { get; set; }
-        public char RightBracket2 { get; set; }
-
         public BracketsHighlightStrategy BracketsHighlightStrategy { get; protected set; }
-
-        public string AutoIndentCharsPatterns { get; protected set; }
-
-        public List<Marker> FoldingMarkers { get; protected set; }
 
 
 
         public LuaSyntax()
+			: base("Lua")
         {
-			Name = "Lua";
+			Keywords      = new List<string>()
+			{
+				"and",
+				"break",
+				"do",
+				"else",
+				"elseif",
+				"end",
+				"false",
+				"for",
+				"function",
+				"if",
+				"in",
+				"local",
+				"nil",
+				"not",
+				"or",
+				"repeat",
+				"return",
+				"then",
+				"true",
+				"until",
+				"while",
+			};
+			FunctionNames = new List<string>()
+			{
+				"assert",
+				"collectgarbage",
+				"dofile",
+				"error",
+				"getfenv",
+				"getmetatable",
+				"ipairs",
+				"load",
+				"loadfile",
+				"loadstring",
+				"module",
+				"next",
+				"pairs",
+				"pcall",
+				"print",
+				"rawequal",
+				"rawget",
+				"rawlen",
+				"rawset",
+				"require",
+				"select",
+				"setfenv",
+				"setmetatable",
+				"tonumber",
+				"tostring",
+				"type",
+				"unpack",
+				"xpcal",
+			};
 
-            Rules = new List<Rule>() {
-                new Rule(KeywordRegex(), KeywordStyle()),
-                new Rule( StringRegex(),  StringStyle()),
-                new Rule( NumberRegex(),  NumberStyle()),
+			Rules.Add(new Rule(NumberRegex(), NumberStyle()));
 
-                new Rule( CommentRegex(), CommentStyle()),
-                new Rule(CommentRegex2(), CommentStyle()),
-                new Rule(CommentRegex3(), CommentStyle()),
+			Rules.Add(new Rule(CommentRegex(),  CommentStyle()));
+			Rules.Add(new Rule(CommentRegex2(), CommentStyle()));
+			Rules.Add(new Rule(CommentRegex3(), CommentStyle()));
 
-                new Rule(FunctionRegex(), FunctionStyle()),
-            };
-
-            CommentPrefix = "--";
+			CommentPrefix = "--";
             LeftBracket = '(';
             RightBracket = ')';
             LeftBracket2 = '{';
@@ -57,41 +90,9 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
                 new Marker(@"--\[\[", @"\]\]"),  // allow to collapse comment block
             };
         }
-
-
-
-        public Regex KeywordRegex()
-        {
-            return new Regex(
-                    @"\b(quest|and|break|do|else|elseif|end|false|for|function|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b",
-                    SyntaxHighlighter.RegexCompiledOption);
-        }
-
-        public Style KeywordStyle()
-        {
-            return Styles.BlueBoldStyle;
-        }
-
-        public Regex StringRegex()
-        {
-            return new Regex(@"""""|''|"".*?[^\\]""|'.*?[^\\]'", SyntaxHighlighter.RegexCompiledOption);
-        }
-
-        public Style StringStyle()
-        {
-            return Styles.BrownStyle;
-        }
-
-        public Regex NumberRegex()
-        {
-            return new Regex(@"\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b", SyntaxHighlighter.RegexCompiledOption);
-        }
-
-        public Style NumberStyle()
-        {
-            return Styles.MagentaStyle;
-        }
-
+		
+		
+		
         public Regex CommentRegex()
         {
             return new Regex(@"--.*$", RegexOptions.Multiline | SyntaxHighlighter.RegexCompiledOption);
@@ -112,19 +113,7 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
             return Styles.GreenStyle;
         }
 
-        public Regex FunctionRegex()
-        {
-            return new Regex(
-                    @"\b(assert|collectgarbage|dofile|error|getfenv|getmetatable|ipairs|load|loadfile|loadstring|module|next|pairs|pcall|print|rawequal|rawget|rawset|require|select|setfenv|setmetatable|tonumber|tostring|type|unpack|xpcall)\b",
-                    SyntaxHighlighter.RegexCompiledOption);
-        }
-
-        public Style FunctionStyle()
-        {
-            return Styles.MaroonStyle;
-        }
-
-        public void AutoIndentNeeded(AutoIndentEventArgs args)
+        public override void AutoIndentNeeded(AutoIndentEventArgs args)
         {
             //end of block
             if (Regex.IsMatch(args.LineText, @"^\s*(end|until)\b"))
@@ -149,16 +138,6 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
                 args.Shift = -args.TabLength;
                 return;
             }
-        }
-
-        public Style[] GetStyles()
-        {
-            var styles = new Style[Rules.Count];
-
-            for (int i = 0; i < styles.Length; i++)
-                styles[i] = Rules[i].Style;
-
-            return styles;
         }
     }
 }

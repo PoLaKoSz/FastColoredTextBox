@@ -62,6 +62,7 @@
     <Compile Include="Models\LineYComparer.cs" />
     <Compile Include="Models\PrintDialogSettings.cs" />
     <Compile Include="Models\Syntaxes\CSharpSyntax.cs" />
+    <Compile Include="Models\Syntaxes\Syntax.cs" />
     <Compile Include="Models\Syntaxes\XmlSyntax.cs" />
     <Compile Include="Models\Syntaxes\HtmlSyntax.cs" />
     <Compile Include="Models\ServiceColors.cs" />

@@ -44,7 +44,7 @@ namespace FastColoredTextBoxNS
 	/// <summary>
 	/// Fast colored textbox
 	/// </summary>
-	public partial class FastColoredTextBox : UserControl, ISupportInitialize
+	public class FastColoredTextBox : UserControl, ISupportInitialize
     {
         internal const int minLeftIndent = 8;
         private const int maxBracketSearchIterations = 1000;
