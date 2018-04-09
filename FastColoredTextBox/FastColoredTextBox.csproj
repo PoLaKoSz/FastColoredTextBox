@@ -95,7 +95,6 @@
     <Compile Include="Models\Syntaxes\Bracket.cs" />
     <Compile Include="Models\Syntaxes\CustomSyntax.cs" />
     <Compile Include="Models\Syntaxes\ILanguage.cs" />
-    <Compile Include="Models\Syntaxes\ISyntax.cs" />
     <Compile Include="Models\Syntaxes\LuaSyntax.cs" />
     <Compile Include="Models\Syntaxes\Marker.cs" />
     <Compile Include="Models\Syntaxes\Rule.cs" />
