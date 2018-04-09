@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace FastColoredTextBoxNS.Models.Syntaxes
 {
@@ -19,7 +18,12 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
         
         List<Marker> FoldingMarkers { get; }
 
-        void AutoIndentNeeded(AutoIndentEventArgs args);
+		/// <summary>
+		/// Strategy of search of brackets to highlighting
+		/// </summary>
+		BracketsHighlightStrategy BracketsHighlightStrategy { get; }
+
+		void AutoIndentNeeded(AutoIndentEventArgs args);
 
         Style[] GetStyles();
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace FastColoredTextBoxNS.Models.Syntaxes
@@ -17,7 +16,8 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
 
 		public string AutoIndentCharsPatterns { get; protected set; }
 		public List<Marker> FoldingMarkers { get; protected set; }
-		
+		public BracketsHighlightStrategy BracketsHighlightStrategy { get; protected set; }
+
 		private List<string> _Keywords;
 		protected List<string> Keywords
 		{
@@ -74,6 +74,8 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
 			AutoIndentCharsPatterns = "";
 
 			FoldingMarkers = new List<Marker>();
+
+			BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
 
 			Keywords      = new List<string>();
 			FunctionNames = new List<string>();

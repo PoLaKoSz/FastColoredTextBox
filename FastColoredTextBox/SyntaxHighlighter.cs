@@ -32,8 +32,6 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public virtual void HighlightSyntax(ILanguage language, Range range)
         {
-            range.tb.BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
-            
             range.ClearStyle(language.GetStyles());
 
             foreach (var rule in language.Rules)

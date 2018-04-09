@@ -247,13 +247,6 @@ namespace FastColoredTextBoxNS
         /// It is needed to restore child folding after user collapsed/expanded top-level folding block.</remarks>
         [Browsable(false)]
         public Dictionary<int, int> FoldedBlocks { get; private set; }
-
-        /// <summary>
-        /// Strategy of search of brackets to highlighting
-        /// </summary>
-        [DefaultValue(typeof(BracketsHighlightStrategy), "Strategy1")]
-        [Description("Strategy of search of brackets to highlighting.")]
-        public BracketsHighlightStrategy BracketsHighlightStrategy { get; set; }
         
         /// <summary>
         /// Automatically shifts secondary wordwrap lines on the shift amount of the first line
@@ -6947,11 +6940,10 @@ namespace FastColoredTextBoxNS
         /// </summary>
         private void HighlightBrackets(char LeftBracket, char RightBracket, ref Range leftBracketPosition, ref Range rightBracketPosition)
         {
-            switch(BracketsHighlightStrategy)
-            {
-                case BracketsHighlightStrategy.Strategy1: HighlightBrackets1(LeftBracket, RightBracket, ref leftBracketPosition, ref rightBracketPosition); break;
-                case BracketsHighlightStrategy.Strategy2: HighlightBrackets2(LeftBracket, RightBracket, ref leftBracketPosition, ref rightBracketPosition); break;
-            }
+			if (Language.BracketsHighlightStrategy == BracketsHighlightStrategy.Strategy1)
+				HighlightBrackets1(LeftBracket, RightBracket, ref leftBracketPosition, ref rightBracketPosition);
+			else
+				HighlightBrackets2(LeftBracket, RightBracket, ref leftBracketPosition, ref rightBracketPosition);
         }
 
         private void HighlightBrackets1(char LeftBracket, char RightBracket, ref Range leftBracketPosition, ref Range rightBracketPosition)
@@ -6971,8 +6963,7 @@ namespace FastColoredTextBoxNS
                 rightBracketPosition = new Range(this, new Place(range.End.iChar - 1, range.End.iLine), range.End);
             }
 
-            if (oldLeftBracketPosition != leftBracketPosition ||
-                oldRightBracketPosition != rightBracketPosition)
+            if (oldLeftBracketPosition != leftBracketPosition || oldRightBracketPosition != rightBracketPosition)
                 Invalidate();
         }
 

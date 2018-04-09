@@ -3,12 +3,8 @@ using System.Text.RegularExpressions;
 
 namespace FastColoredTextBoxNS.Models.Syntaxes
 {
-    public class LuaSyntax : Syntax //ILanguage
+    public class LuaSyntax : Syntax
     {
-        public BracketsHighlightStrategy BracketsHighlightStrategy { get; protected set; }
-
-
-
         public LuaSyntax()
 			: base("Lua")
         {
@@ -79,10 +75,6 @@ namespace FastColoredTextBoxNS.Models.Syntaxes
             RightBracket = ')';
             LeftBracket2 = '{';
             RightBracket2 = '}';
-
-            BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
-
-            AutoIndentCharsPatterns = "";
 
             FoldingMarkers = new List<Marker>()
             {

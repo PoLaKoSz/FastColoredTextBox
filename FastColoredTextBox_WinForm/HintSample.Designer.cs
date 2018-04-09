@@ -137,7 +137,6 @@ namespace Tester
         '\''};
             this.fctb.AutoScrollMinSize = new System.Drawing.Size(0, 290);
             this.fctb.BackBrush = null;
-            this.fctb.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
             this.fctb.CharHeight = 15;
             this.fctb.CharWidth = 7;
             this.fctb.Cursor = System.Windows.Forms.Cursors.IBeam;

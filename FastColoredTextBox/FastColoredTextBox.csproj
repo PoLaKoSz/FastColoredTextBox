@@ -108,7 +108,6 @@
       <DependentUpon>Ruler.cs</DependentUpon>
     </Compile>
     <Compile Include="StaticResources\Styles.cs" />
-    <Compile Include="Models\SyntaxDescriptor.cs" />
     <Compile Include="SyntaxHighlighter.cs" />
     <Compile Include="Views\Forms\ReplaceForm.cs">
       <SubType>Form</SubType>
