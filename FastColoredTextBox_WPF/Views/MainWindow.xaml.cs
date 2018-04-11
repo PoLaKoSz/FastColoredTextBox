@@ -12,6 +12,9 @@ namespace FastColoredTextBox_WPF
 	{
 		public MainWindow()
 		{
+			// Change the app UI language
+			//System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("hu");
+
 			InitializeComponent();
 		}
 
@@ -23,7 +26,7 @@ namespace FastColoredTextBox_WPF
 			// Create the FastColoredTextBox control.
 			var fctb = new FastColoredTextBox
 			{
-				Language = new CSharpSyntax()
+				Language = new LuaSyntax()
 			};
 
 			// Assign the FastColoredTextBox control as the host control's child.
@@ -31,7 +34,7 @@ namespace FastColoredTextBox_WPF
 
 			// Add the interop host control to the Grid
 			// control's collection of child controls.
-			this.ColoredTextBoxTutorial.Children.Add(host);
+			this.FastColoredTextBox.Children.Add(host);
 		}
 	}
 }
