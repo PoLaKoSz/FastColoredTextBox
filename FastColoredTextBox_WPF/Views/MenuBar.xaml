@@ -14,5 +14,8 @@
 			<Separator/>
 			<MenuItem Header="{x:Static languages:Resources.menubar_exit}"/>
 		</MenuItem>
+
+		<MenuItem Header="{x:Static languages:Resources.menubar_settings}"
+				  Click="SettingsMenuButton_Click"/>
 	</Menu>
 </UserControl>

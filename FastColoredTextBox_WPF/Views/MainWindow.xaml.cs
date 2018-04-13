@@ -1,4 +1,5 @@
-﻿using FastColoredTextBoxNS;
+﻿using FastColoredTextBox_WPF.ViewModels;
+using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Models.Syntaxes;
 using System.Windows;
 using System.Windows.Forms.Integration;
@@ -10,31 +11,35 @@ namespace FastColoredTextBox_WPF
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		public UserViewModel UserViewModel { get; private set; }
+		public static SettingsViewModel SettingsViewModel { get; private set; }
+		private FastColoredTextBox FCTB { get; set; }
+
 		public MainWindow()
 		{
 			// Change the app UI language
 			//System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("hu");
+
+			FCTB = new FastColoredTextBox
+			{
+				Language = new LuaSyntax()
+			};
+
+			UserViewModel = new UserViewModel(FCTB);
+
+			SettingsViewModel = new SettingsViewModel(UserViewModel.CurrentUser.Settings);
 
 			InitializeComponent();
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			// Create the interop host control.
-			var host = new WindowsFormsHost();
-
-			// Create the FastColoredTextBox control.
-			var fctb = new FastColoredTextBox
+			var windowsFormHost = new WindowsFormsHost
 			{
-				Language = new LuaSyntax()
+				Child = FCTB
 			};
 
-			// Assign the FastColoredTextBox control as the host control's child.
-			host.Child = fctb;
-
-			// Add the interop host control to the Grid
-			// control's collection of child controls.
-			this.FastColoredTextBox.Children.Add(host);
+			FastColoredTextBoxContainer.Children.Add(windowsFormHost);
 		}
 	}
 }

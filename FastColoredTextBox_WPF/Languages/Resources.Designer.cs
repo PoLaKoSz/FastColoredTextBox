@@ -61,7 +61,16 @@ namespace FastColoredTextBox_WPF.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Application restart required..
+        /// </summary>
+        public static string application_restart_needed {
+            get {
+                return ResourceManager.GetString("application_restart_needed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string menubar_exit {
             get {
@@ -70,7 +79,7 @@ namespace FastColoredTextBox_WPF.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hi there! :).
+        ///   Looks up a localized string similar to File.
         /// </summary>
         public static string menubar_file {
             get {
@@ -79,7 +88,7 @@ namespace FastColoredTextBox_WPF.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to New.
         /// </summary>
         public static string menubar_new {
             get {
@@ -88,7 +97,7 @@ namespace FastColoredTextBox_WPF.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string menubar_open {
             get {
@@ -97,11 +106,56 @@ namespace FastColoredTextBox_WPF.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string menubar_save {
             get {
                 return ResourceManager.GetString("menubar_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string menubar_settings {
+            get {
+                return ResourceManager.GetString("menubar_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string settings_submenu_general {
+            get {
+                return ResourceManager.GetString("settings_submenu_general", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display language.
+        /// </summary>
+        public static string settings_submenu_general_uiLanguage {
+            get {
+                return ResourceManager.GetString("settings_submenu_general_uiLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text editor.
+        /// </summary>
+        public static string settings_submenu_textEditor {
+            get {
+                return ResourceManager.GetString("settings_submenu_textEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show line number.
+        /// </summary>
+        public static string settings_submenu_textEditor_showLineNumber {
+            get {
+                return ResourceManager.GetString("settings_submenu_textEditor_showLineNumber", resourceCulture);
             }
         }
     }

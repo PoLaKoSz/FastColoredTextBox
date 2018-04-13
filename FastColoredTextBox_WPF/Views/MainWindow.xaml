@@ -8,10 +8,11 @@
         Title="MainWindow"
 		Height="450"
 		Width="800"
-		Loaded="Window_Loaded">
+		Loaded="Window_Loaded"		
+		WindowStartupLocation="CenterScreen">
 	<DockPanel>
 		<controls:MenuBar DockPanel.Dock="Top"/>
 
-		<Grid Name="FastColoredTextBox"/>
+		<Grid Name="FastColoredTextBoxContainer"/>
 	</DockPanel>
 </Window>
