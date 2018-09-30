@@ -1,46 +1,35 @@
 ﻿using FastColoredTextBox_WPF.ViewModels;
 using FastColoredTextBoxNS;
-using FastColoredTextBoxNS.Models.Syntaxes;
 using System.Windows;
 using System.Windows.Forms.Integration;
 
 namespace FastColoredTextBox_WPF
 {
-	public partial class MainWindow : Window
-	{
-		public UserViewModel UserViewModel { get; private set; }
-		public static SettingsViewModel SettingsViewModel { get; private set; }
-		private FastColoredTextBox FCTB { get; set; }
+    public partial class MainWindow : Window
+    {
+        private FastColoredTextBox _ide { get; }
 
 
 
-		public MainWindow()
-		{
-			// Change the app UI language
-			//System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("hu");
+        public MainWindow(MainViewModel viewModel, FastColoredTextBox ide)
+        {
+            DataContext = viewModel;
 
-			FCTB = new FastColoredTextBox
-			{
-				Language = new LuaSyntax()
-			};
+            _ide = ide;
 
-			UserViewModel = new UserViewModel(FCTB);
-
-			SettingsViewModel = new SettingsViewModel(UserViewModel.CurrentUser.Settings);
-
-			InitializeComponent();
-		}
+            InitializeComponent();
+        }
 
 
 
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			var windowsFormHost = new WindowsFormsHost
-			{
-				Child = FCTB
-			};
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var windowsFormHost = new WindowsFormsHost
+            {
+                Child = _ide
+            };
 
-			FastColoredTextBoxContainer.Children.Add(windowsFormHost);
-		}
-	}
+            FastColoredTextBoxContainer.Children.Add(windowsFormHost);
+        }
+    }
 }

@@ -1,21 +1,33 @@
 ﻿<UserControl x:Class="FastColoredTextBox_WPF.Views.MenuBar"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:languages="clr-namespace:FastColoredTextBox_WPF.Languages"
-             mc:Ignorable="d" d:DesignWidth="200"
-			 Height="25">
-	<Menu>
-		<MenuItem Header="{x:Static languages:Resources.menubar_file}">
-			<MenuItem Header="{x:Static languages:Resources.menubar_new}"/>
-			<MenuItem Header="{x:Static languages:Resources.menubar_open}"/>
-			<MenuItem Header="{x:Static languages:Resources.menubar_save}"/>
-			<Separator/>
-			<MenuItem Header="{x:Static languages:Resources.menubar_exit}"/>
-		</MenuItem>
+             xmlns:languages="clr-namespace:FastColoredTextBox_WPF.Languages"
+             mc:Ignorable="d"
+             d:DesignWidth="200"
+             Height="25">
+    <Menu>
+        <MenuItem Header="{x:Static languages:Resources.menubar_file}">
+            <MenuItem Header="{x:Static languages:Resources.menubar_new}" />
+            <MenuItem Header="{x:Static languages:Resources.menubar_open}" />
+            <MenuItem Header="{x:Static languages:Resources.menubar_save}" />
+            <Separator />
+            <MenuItem Header="{x:Static languages:Resources.menubar_exit}" />
+        </MenuItem>
+        
+        <MenuItem Header="Import / Export">
+            <MenuItem Header="Import" />            
+            <Separator />            
+            <MenuItem Header="Export">
+                <MenuItem Header="to HTML"
+                          Command="{Binding MenuBar.ExportToHtmlCommand}" />
+                <MenuItem Header="to RTF"
+                          Command="{Binding MenuBar.ExportToRTF}" />
+            </MenuItem>
+        </MenuItem>
 
-		<MenuItem Header="{x:Static languages:Resources.menubar_settings}"
-				  Click="SettingsMenuButton_Click"/>
-	</Menu>
+        <MenuItem Header="{x:Static languages:Resources.menubar_settings}"
+                  Command="{Binding MenuBar.OpenSettingsCommand}" />
+    </Menu>
 </UserControl>

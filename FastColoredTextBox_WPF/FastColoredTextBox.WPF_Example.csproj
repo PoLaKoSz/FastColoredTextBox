@@ -89,7 +89,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\CommandHandler.cs" />
+    <Compile Include="Modules\Exporter.cs" />
+    <Compile Include="Modules\MenuBar.cs" />
+    <Compile Include="MVVM\CommandHandler.cs" />
     <Compile Include="Languages\Resources.hu.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -106,6 +108,7 @@
     <Compile Include="Models\SettingsModels\SettingsMenuCollection.cs" />
     <Compile Include="Models\SupportedLanguageCollection.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\MenuBar.xaml.cs">

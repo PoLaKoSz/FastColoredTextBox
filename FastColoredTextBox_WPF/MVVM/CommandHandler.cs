@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace FastColoredTextBox_WPF.Helpers
+namespace FastColoredTextBox_WPF.MVMM
 {
 	public class CommandHandler : ICommand
 	{

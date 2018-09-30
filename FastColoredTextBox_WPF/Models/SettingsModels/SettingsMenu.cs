@@ -8,7 +8,7 @@ namespace FastColoredTextBox_WPF.Models.SettingsModels
 		public UserControl View { get; set; }
 
 
-		
+
 		public SettingsMenu(string menuName, UserControl userControl)
 		{
 			Name = menuName;

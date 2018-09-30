@@ -1,4 +1,4 @@
-﻿using FastColoredTextBox_WPF.Helpers;
+﻿using FastColoredTextBox_WPF.MVMM;
 using FastColoredTextBox_WPF.Models;
 using FastColoredTextBox_WPF.Models.SettingsModels;
 using FastColoredTextBox_WPF.Views.Settings;
@@ -9,24 +9,22 @@ namespace FastColoredTextBox_WPF.ViewModels
 {
 	public class SettingsViewModel
 	{
-		private SettingsWindow View { get; set; }
+        private readonly SettingsWindow _view;
+
 
 		public Settings CurrentSettings { get; private set; }
 
-		public SettingsMenu[] MenuItems { get; private set; }
+        public SettingsMenu[] MenuItems { get; private set; }
 		public SettingsMenu CurrentMenu { get; private set; }
 
 		public ICommand ChangeSubmenuViewCommand
 		{
-			get
-			{
-				return new CommandHandler(param => SettingsSubmenu_Click(param as SettingsMenu), true);
-			}
+			get => new CommandHandler(param => SettingsSubmenu_Click(param as SettingsMenu), true);
 		}
 
 
 
-		public SettingsViewModel(Settings settings)
+        public SettingsViewModel(Settings settings)
 		{
 			CurrentSettings = settings;
 
@@ -34,23 +32,23 @@ namespace FastColoredTextBox_WPF.ViewModels
 
 			CurrentMenu = MenuItems[0];
 
-			View = new SettingsWindow(this);
+			_view = new SettingsWindow(this);
 		}
 
 
 
-		public void OpenSettingsWindow()
-		{
-			View.Show();
+        public void OpenView()
+        {
+            _view.Show();
 
-			ChangeSubmenuView(CurrentMenu.View);
-		}
+            ChangeSubmenuView(CurrentMenu.View);
+        }
 
 		private void ChangeSubmenuView(UserControl userControl)
 		{
-			View.settingsSubViewContainer.Children.Clear();
+			_view.settingsSubViewContainer.Children.Clear();
 
-			View.settingsSubViewContainer.Children.Add(userControl);
+			_view.settingsSubViewContainer.Children.Add(userControl);
 		}
 
 		private void SettingsSubmenu_Click(SettingsMenu newSettingsSubmenu)

@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace FastColoredTextBox_WPF.Views
 {
@@ -8,13 +7,6 @@ namespace FastColoredTextBox_WPF.Views
 		public MenuBar()
 		{
 			InitializeComponent();
-		}
-		
-
-
-		private void SettingsMenuButton_Click(object sender, RoutedEventArgs e)
-		{
-			MainWindow.SettingsViewModel.OpenSettingsWindow();
 		}
 	}
 }
