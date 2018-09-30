@@ -192,7 +192,7 @@ namespace FastColoredTextBoxNS
             AllowDrop = true;
             FindEndOfFoldingBlockStrategy = FindEndOfFoldingBlockStrategy.Strategy1;
             VirtualSpace = false;
-            bookmarks = new Bookmarks(this);
+            bookmarks = new BookmarksManager(this);
             BookmarkColor = Color.PowderBlue;
             ToolTip = new ToolTip();
             tooltipTimer.Interval = 500;

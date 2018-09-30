@@ -76,7 +76,7 @@
     <Compile Include="Views\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Bookmarks.cs" />
+    <Compile Include="Modules\BookmarksManager.cs" />
     <Compile Include="Models\Char.cs" />
     <Compile Include="DocumentMap.cs">
       <SubType>Component</SubType>

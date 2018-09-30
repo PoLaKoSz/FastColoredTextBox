@@ -43,13 +43,13 @@ namespace FastColoredTextBoxNS
     /// <summary>
     /// Collection of bookmarks
     /// </summary>
-    public class Bookmarks : BaseBookmarks
+    public class BookmarksManager : BaseBookmarks
     {
         protected FastColoredTextBox tb;
         protected List<Bookmark> items = new List<Bookmark>();
         protected int counter;
 
-        public Bookmarks(FastColoredTextBox tb)
+        public BookmarksManager(FastColoredTextBox tb)
         {
             this.tb = tb;
             tb.LineInserted += tb_LineInserted;
