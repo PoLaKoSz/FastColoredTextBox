@@ -1,4 +1,5 @@
-﻿using FastColoredTextBoxNS;
+﻿using System;
+using FastColoredTextBoxNS;
 namespace Tester
 {
     partial class PowerfulSample
@@ -493,6 +494,16 @@ namespace Tester
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void rTFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void hTMLToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

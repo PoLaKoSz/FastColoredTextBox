@@ -23,7 +23,7 @@
                 <MenuItem Header="to HTML"
                           Command="{Binding MenuBar.ExportToHtmlCommand}" />
                 <MenuItem Header="to RTF"
-                          Command="{Binding MenuBar.ExportToRTF}" />
+                          Command="{Binding MenuBar.ExportToRtfCommand}" />
             </MenuItem>
         </MenuItem>
 

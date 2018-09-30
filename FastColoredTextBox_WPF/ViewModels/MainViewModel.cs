@@ -24,7 +24,9 @@ namespace FastColoredTextBox_WPF.ViewModels
 
             var settings = new SettingsViewModel(new Settings(IDE));
 
-            MenuBar = new MenuBar(settings, IDE);
+            IFileBroker fileBroker = new FileBroker();
+
+            MenuBar = new MenuBar(settings, IDE, fileBroker);
 
             _view = new MainWindow(this, IDE);
             _view.Show();

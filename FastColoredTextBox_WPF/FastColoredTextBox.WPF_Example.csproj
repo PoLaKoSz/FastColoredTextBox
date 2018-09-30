@@ -89,7 +89,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Modules\Exporter.cs" />
     <Compile Include="Modules\MenuBar.cs" />
     <Compile Include="MVVM\CommandHandler.cs" />
     <Compile Include="Languages\Resources.hu.Designer.cs">

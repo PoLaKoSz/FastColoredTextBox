@@ -49,6 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutocompleteItem.cs" />
+    <Compile Include="DataAccessLayer\FileBroker.cs" />
+    <Compile Include="DataAccessLayer\IFileType.cs" />
+    <Compile Include="DataAccessLayer\HtmlFileType.cs" />
+    <Compile Include="DataAccessLayer\IFileBroker.cs" />
+    <Compile Include="DataAccessLayer\RtfFileType.cs" />
     <Compile Include="Events\AutoIndentEventArgs.cs" />
     <Compile Include="Events\CustomActionEventArgs.cs" />
     <Compile Include="Events\HintClickEventArgs.cs" />
@@ -66,6 +71,7 @@
     <Compile Include="Models\Syntaxes\XmlSyntax.cs" />
     <Compile Include="Models\Syntaxes\HtmlSyntax.cs" />
     <Compile Include="Models\ServiceColors.cs" />
+    <Compile Include="Modules\Exporter\Exporter.cs" />
     <Compile Include="Views\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -75,8 +81,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EncodingDetector.cs" />
-    <Compile Include="ExportToHTML.cs" />
-    <Compile Include="ExportToRTF.cs" />
+    <Compile Include="Modules\Exporter\ExportToHTML.cs" />
+    <Compile Include="Modules\Exporter\ExportToRTF.cs" />
     <Compile Include="Views\Forms\GoToForm.cs">
       <SubType>Form</SubType>
     </Compile>

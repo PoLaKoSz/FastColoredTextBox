@@ -133,32 +133,6 @@ namespace Tester
             fctb.DecreaseIndent();
         }
 
-        private void hTMLToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "HTML with <PRE> tag|*.html|HTML without <PRE> tag|*.html";
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                string html = "";
-
-                if (sfd.FilterIndex == 1)
-                {
-                    html = fctb.Html;
-                }
-                if (sfd.FilterIndex == 2)
-                {
-                    
-                    ExportToHTML exporter = new ExportToHTML();
-                    exporter.UseBr = true;
-                    exporter.UseNbsp = false;
-                    exporter.UseForwardNbsp = true;
-                    exporter.UseStyleTag = true;
-                    html = exporter.GetHtml(fctb);
-                }
-                File.WriteAllText(sfd.FileName, html);
-            }
-        }
-
         private void fctb_SelectionChangedDelayed(object sender, EventArgs e)
         {
             fctb.VisibleRange.ClearStyle(SameWordsStyle);
@@ -340,17 +314,6 @@ namespace Tester
             var form = new HotkeysEditorForm(fctb.HotkeysMapping);
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 fctb.HotkeysMapping = form.GetHotkeys();
-        }
-
-        private void rTFToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "RTF|*.rtf";
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                string rtf = fctb.Rtf;
-                File.WriteAllText(sfd.FileName, rtf);
-            }
         }
 
         private void fctb_CustomAction(object sender, CustomActionEventArgs e)

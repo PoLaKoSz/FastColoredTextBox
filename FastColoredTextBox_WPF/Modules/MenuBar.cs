@@ -18,11 +18,11 @@ namespace FastColoredTextBox_WPF.Modules
 
 
 
-        public MenuBar(SettingsViewModel settings, FastColoredTextBox ide)
+        public MenuBar(SettingsViewModel settings, FastColoredTextBox ide, IFileBroker fileBroker)
         {
             _settings = settings;
             _ide = ide;
-            _exporter = new Exporter();
+            _exporter = new Exporter(fileBroker);
         }
     }
 }
