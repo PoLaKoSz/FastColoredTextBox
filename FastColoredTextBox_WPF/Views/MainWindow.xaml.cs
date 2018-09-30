@@ -6,14 +6,13 @@ using System.Windows.Forms.Integration;
 
 namespace FastColoredTextBox_WPF
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class MainWindow : Window
 	{
 		public UserViewModel UserViewModel { get; private set; }
 		public static SettingsViewModel SettingsViewModel { get; private set; }
 		private FastColoredTextBox FCTB { get; set; }
+
+
 
 		public MainWindow()
 		{
@@ -31,6 +30,8 @@ namespace FastColoredTextBox_WPF
 
 			InitializeComponent();
 		}
+
+
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
