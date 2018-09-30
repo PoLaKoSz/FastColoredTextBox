@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutocompleteItem.cs" />
+    <Compile Include="Models\Bookmark.cs" />
     <Compile Include="DataAccessLayer\FileBroker.cs" />
     <Compile Include="DataAccessLayer\IFileType.cs" />
     <Compile Include="DataAccessLayer\HtmlFileType.cs" />
