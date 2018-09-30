@@ -1,59 +1,38 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace FastColoredTextBoxNS
 {
-    /// <summary>
-    /// Base class for bookmark collection
-    /// </summary>
-    public abstract class BaseBookmarks : ICollection<Bookmark>, IDisposable
+    public interface IBookmarksManager : ICollection<Bookmark>, IDisposable
     {
-        #region ICollection
-        public abstract void Add(Bookmark item);
-        public abstract void Clear();
-        public abstract bool Contains(Bookmark item);
-        public abstract void CopyTo(Bookmark[] array, int arrayIndex);
-        public abstract int Count { get; }
-        public abstract bool IsReadOnly { get; }
-        public abstract bool Remove(Bookmark item);
-        public abstract IEnumerator<Bookmark> GetEnumerator();
+        new IEnumerator<Bookmark> GetEnumerator();
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
-
-        public abstract void Dispose();
-
-        #region Additional properties
         /// <summary>
-        /// Bookmark the current line
+        /// Bookmark the current line if not bookmarked yet
         /// </summary>
-        public abstract void Add();
+        void Add();
 
-        public abstract bool Contains(int lineIndex);
+        bool Contains(int lineIndex);
 
         /// <summary>
         /// Removes the <see cref="Bookmark"/> from the selected line if there is any
         /// </summary>
         /// <returns><c>TRUE</c> if a <see cref="Bookmark"/> removed from the line,
         /// <c>FALSE</c> otherwise</returns>
-        public abstract bool Remove();
-
-        public abstract Bookmark GetBookmark(int i);
-        #endregion
+        bool Remove();
     }
 
     /// <summary>
     /// Collection of bookmarks
     /// </summary>
-    public class BookmarksManager : BaseBookmarks
+    public class BookmarksManager : IBookmarksManager
     {
         protected FastColoredTextBox tb;
         protected List<Bookmark> items = new List<Bookmark>();
         protected int counter;
+
+
 
         public BookmarksManager(FastColoredTextBox tb)
         {
@@ -61,6 +40,8 @@ namespace FastColoredTextBoxNS
             tb.LineInserted += tb_LineInserted;
             tb.LineRemoved += tb_LineRemoved;
         }
+
+
 
         protected virtual void tb_LineRemoved(object sender, LineRemovedEventArgs e)
         {
@@ -101,13 +82,7 @@ namespace FastColoredTextBoxNS
                 }
         }
 
-        public override void Dispose()
-        {
-            tb.LineInserted -= tb_LineInserted;
-            tb.LineRemoved -= tb_LineRemoved;
-        }
-
-        public override IEnumerator<Bookmark> GetEnumerator()
+        public IEnumerator<Bookmark> GetEnumerator()
         {
             foreach (var item in items)
                 yield return item;
@@ -118,23 +93,18 @@ namespace FastColoredTextBoxNS
             Add(new Bookmark(tb, bookmarkName, lineIndex));
         }
 
-        private void Add(int lineIndex)
+        public void Add()
         {
-            Add(new Bookmark(tb, "Bookmark " + counter, lineIndex));
+            Add(tb.Selection.Start.iLine, "Bookmark " + counter);
         }
 
-        public override void Add()
-        {
-            Add(tb.Selection.Start.iLine);
-        }
-
-        public override void Clear()
+        public void Clear()
         {
             items.Clear();
             counter = 0;
         }
 
-        public override void Add(Bookmark bookmark)
+        public void Add(Bookmark bookmark)
         {
             if (Contains(bookmark.LineIndex))
                     return;
@@ -144,12 +114,12 @@ namespace FastColoredTextBoxNS
             tb.Invalidate();
         }
 
-        public override bool Contains(Bookmark item)
+        public bool Contains(Bookmark item)
         {
             return items.Contains(item);
         }
 
-        public override bool Contains(int lineIndex)
+        public bool Contains(int lineIndex)
         {
             foreach (var item in items)
             {
@@ -162,30 +132,27 @@ namespace FastColoredTextBoxNS
             return false;
         }
 
-        public override void CopyTo(Bookmark[] array, int arrayIndex)
+        public void CopyTo(Bookmark[] array, int arrayIndex)
         {
             items.CopyTo(array, arrayIndex);
         }
 
-        public override int Count
+        public int Count
         {
             get { return items.Count; }
         }
 
-        public override bool IsReadOnly
+        public bool IsReadOnly
         {
             get { return false; }
         }
 
-        public override bool Remove(Bookmark item)
+        public bool Remove(Bookmark item)
         {
             tb.Invalidate();
             return items.Remove(item);
         }
 
-        /// <summary>
-        /// Removes bookmark by line index
-        /// </summary>
         private bool Remove(int lineIndex)
         {
             bool was = false;
@@ -201,17 +168,21 @@ namespace FastColoredTextBoxNS
             return was;
         }
 
-        public override bool Remove()
+        public bool Remove()
         {
             return Remove(tb.Selection.Start.iLine);
         }
 
-        /// <summary>
-        /// Returns Bookmark by index.
-        /// </summary>
-        public override Bookmark GetBookmark(int i)
+
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return items[i];
+            return GetEnumerator();
+        }
+
+        public void Dispose()
+        {
+            tb.LineInserted -= tb_LineInserted;
+            tb.LineRemoved -= tb_LineRemoved;
         }
     }
 }

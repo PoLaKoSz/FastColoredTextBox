@@ -64,7 +64,7 @@ namespace FastColoredTextBoxNS
         public int TextHeight;
         public bool AllowInsertRemoveLines = true;
         private Brush backBrush;
-        private BaseBookmarks bookmarks;
+        private IBookmarksManager bookmarks;
         private bool caretVisible;
         private Color changedLineColor;
         private int charHeight;
@@ -325,7 +325,7 @@ namespace FastColoredTextBoxNS
         /// </summary>
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
          EditorBrowsable(EditorBrowsableState.Never)]
-        public BaseBookmarks Bookmarks
+        public IBookmarksManager Bookmarks
         {
             get { return bookmarks; }
             set { bookmarks = value; }
@@ -3998,8 +3998,7 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public virtual void BookmarkLine()
         {
-            if (!bookmarks.Contains(Selection.Start.iLine))
-                bookmarks.Add();
+            bookmarks.Add();
         }
 
         /// <summary>
