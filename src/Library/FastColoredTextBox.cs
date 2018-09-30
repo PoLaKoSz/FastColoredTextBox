@@ -321,17 +321,6 @@ namespace FastColoredTextBoxNS
         public Color BookmarkColor { get; set; }
 
         /// <summary>
-        /// Bookmarks
-        /// </summary>
-        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
-         EditorBrowsable(EditorBrowsableState.Never)]
-        public IBookmarksManager Bookmarks
-        {
-            get { return bookmarks; }
-            set { bookmarks = value; }
-        }
-
-        /// <summary>
         /// Enables virtual spaces
         /// </summary>
         [DefaultValue(false)]
@@ -1956,8 +1945,6 @@ namespace FastColoredTextBoxNS
 
             LineInfos.Clear();
             ClearHints();
-            if (Bookmarks != null)
-                Bookmarks.Clear();
 
             lines = ts;
 
@@ -3630,14 +3617,6 @@ namespace FastColoredTextBoxNS
                     NavigateForward();
                     break;
 
-                case FCTBAction.UnbookmarkLine:
-                    UnbookmarkLine();
-                    break;
-
-                case FCTBAction.BookmarkLine:
-                    BookmarkLine();
-                    break;
-
                 case FCTBAction.GoNextBookmark:
                     GotoNextBookmark();
                     break;
@@ -3991,22 +3970,6 @@ namespace FastColoredTextBoxNS
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Bookmarks line
-        /// </summary>
-        public virtual void BookmarkLine()
-        {
-            bookmarks.Add();
-        }
-
-        /// <summary>
-        /// Unbookmarks current line
-        /// </summary>
-        public virtual void UnbookmarkLine()
-        {
-            bookmarks.Remove();
         }
 
         /// <summary>

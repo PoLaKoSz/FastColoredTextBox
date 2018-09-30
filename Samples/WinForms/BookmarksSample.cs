@@ -6,25 +6,34 @@ namespace Tester
 {
     public partial class BookmarksSample : Form
     {
+        private readonly IBookmarksManager _bookmarks;
+
+
+
         public BookmarksSample()
         {
+            _bookmarks = new BookmarksManager(fctb);
+
             InitializeComponent();
         }
 
+
+
         private void btAddBookmark_Click(object sender, EventArgs e)
         {
-            fctb.Bookmarks.Add();
+            _bookmarks.Add();
         }
 
         private void btRemoveBookmark_Click(object sender, EventArgs e)
         {
-            fctb.Bookmarks.Remove();
+            _bookmarks.Remove();
         }
 
         private void btGo_DropDownOpening(object sender, EventArgs e)
         {
             btGo.DropDownItems.Clear();
-            foreach (var bookmark in fctb.Bookmarks)
+
+            foreach (var bookmark in _bookmarks)
             {
                 var item = btGo.DropDownItems.Add(bookmark.Name);
                 item.Tag = bookmark;
@@ -37,10 +46,15 @@ namespace Tester
             if(e.X < fctb.LeftIndent)
             {
                 var place = fctb.PointToPlace(e.Location);
-                if(fctb.Bookmarks.Contains(place.iLine))
-                    fctb.Bookmarks.Remove();
+
+                if (_bookmarks.Contains(place.iLine))
+                {
+                    _bookmarks.Remove();
+                }
                 else
-                    fctb.Bookmarks.Add();
+                {
+                    _bookmarks.Add();
+                }
             }
         }
     }

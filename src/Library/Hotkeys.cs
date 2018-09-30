@@ -38,8 +38,6 @@ namespace FastColoredTextBoxNS
             this[KEYS.Shift | KEYS.Control | KEYS.U] = FCTBAction.LowerCase;
             this[KEYS.Control | KEYS.OemMinus] = FCTBAction.NavigateBackward;
             this[KEYS.Control | KEYS.Shift | KEYS.OemMinus] = FCTBAction.NavigateForward;
-            this[KEYS.Control | KEYS.B] = FCTBAction.BookmarkLine;
-            this[KEYS.Control | KEYS.Shift | KEYS.B] = FCTBAction.UnbookmarkLine;
             this[KEYS.Control | KEYS.N] = FCTBAction.GoNextBookmark;
             this[KEYS.Control | KEYS.Shift | KEYS.N] = FCTBAction.GoPrevBookmark;
             this[KEYS.Alt | KEYS.Back] = FCTBAction.Undo;
@@ -143,7 +141,6 @@ namespace FastColoredTextBoxNS
         None,
         AutocompleteMenu,
         AutoIndentChars,
-        BookmarkLine,
         ClearHints,
         ClearWordLeft,
         ClearWordRight,
@@ -201,7 +198,6 @@ namespace FastColoredTextBoxNS
         ScrollDown,
         ScrollUp,
         SelectAll,
-        UnbookmarkLine,
         Undo,
         UpperCase,
         ZoomIn,

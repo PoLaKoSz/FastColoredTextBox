@@ -13,8 +13,9 @@ using FastColoredTextBoxNS.Models.Syntaxes;
 
 namespace Tester
 {
-	public partial class PowerfulCSharpEditor : Form
+    public partial class PowerfulCSharpEditor : Form
     {
+
         string[] keywords = { "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while", "add", "alias", "ascending", "descending", "dynamic", "from", "get", "global", "group", "into", "join", "let", "orderby", "partial", "remove", "select", "set", "value", "var", "where", "yield" };
         string[] methods = { "Equals()", "GetHashCode()", "GetType()", "ToString()" };
         string[] snippets = { "if(^)\n{\n;\n}", "if(^)\n{\n;\n}\nelse\n{\n;\n}", "for(^;;)\n{\n;\n}", "while(^)\n{\n;\n}", "do\n{\n^;\n}while();", "switch(^)\n{\ncase : break;\n}" };
@@ -27,6 +28,7 @@ namespace Tester
         Style invisibleCharsStyle = new InvisibleCharsRenderer(Pens.Gray);
         Color currentLineColor = Color.FromArgb(100, 210, 210, 255);
         Color changedLineColor = Color.FromArgb(255, 230, 230, 255);
+
 
 
         public PowerfulCSharpEditor()
@@ -779,6 +781,20 @@ namespace Tester
             }
         }
 
+        private class IntegratedDevelopmentEnvironment
+        {
+            private readonly FastColoredTextBox _textBox;
+            private readonly IBookmarksManager _bookmarks;
+
+
+
+            public IntegratedDevelopmentEnvironment()
+            {
+                _textBox = new FastColoredTextBox();
+                _bookmarks = new BookmarksManager(_textBox);
+            }
+        }
+
         private void autoIndentSelectedTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CurrentTB.DoAutoIndent();
@@ -847,16 +863,12 @@ namespace Tester
 
         private void bookmarkPlusButton_Click(object sender, EventArgs e)
         {
-            if(CurrentTB == null) 
-                return;
-            CurrentTB.BookmarkLine();
+
         }
 
         private void bookmarkMinusButton_Click(object sender, EventArgs e)
         {
-            if (CurrentTB == null)
-                return;
-            CurrentTB.UnbookmarkLine();
+
         }
 
         private void gotoButton_DropDownOpening(object sender, EventArgs e)
