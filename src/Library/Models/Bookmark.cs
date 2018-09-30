@@ -40,8 +40,7 @@ namespace FastColoredTextBoxNS
             TB.DoRangeVisible(TB.Selection, true);
             TB.Invalidate();
         }
-
-
+        
         public virtual void Paint(Graphics gr, Rectangle lineRect)
         {
             var size = TB.CharHeight - 1;

@@ -849,14 +849,14 @@ namespace Tester
         {
             if(CurrentTB == null) 
                 return;
-            CurrentTB.BookmarkLine(CurrentTB.Selection.Start.iLine);
+            CurrentTB.BookmarkLine();
         }
 
         private void bookmarkMinusButton_Click(object sender, EventArgs e)
         {
             if (CurrentTB == null)
                 return;
-            CurrentTB.UnbookmarkLine(CurrentTB.Selection.Start.iLine);
+            CurrentTB.UnbookmarkLine();
         }
 
         private void gotoButton_DropDownOpening(object sender, EventArgs e)

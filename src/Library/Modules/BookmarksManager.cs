@@ -25,18 +25,24 @@ namespace FastColoredTextBoxNS
 
         #endregion
 
-        #region IDisposable
         public abstract void Dispose();
-        #endregion
 
         #region Additional properties
+        /// <summary>
+        /// Bookmark the current line
+        /// </summary>
+        public abstract void Add();
 
-        public abstract void Add(int lineIndex, string bookmarkName);
-        public abstract void Add(int lineIndex);
         public abstract bool Contains(int lineIndex);
-        public abstract bool Remove(int lineIndex);
-        public abstract Bookmark GetBookmark(int i);
 
+        /// <summary>
+        /// Removes the <see cref="Bookmark"/> from the selected line if there is any
+        /// </summary>
+        /// <returns><c>TRUE</c> if a <see cref="Bookmark"/> removed from the line,
+        /// <c>FALSE</c> otherwise</returns>
+        public abstract bool Remove();
+
+        public abstract Bookmark GetBookmark(int i);
         #endregion
     }
 
@@ -94,7 +100,7 @@ namespace FastColoredTextBoxNS
                         items[i].LineIndex = items[i].LineIndex + e.Count;
                 }
         }
-    
+
         public override void Dispose()
         {
             tb.LineInserted -= tb_LineInserted;
@@ -107,14 +113,19 @@ namespace FastColoredTextBoxNS
                 yield return item;
         }
 
-        public override void Add(int lineIndex, string bookmarkName)
+        private void Add(int lineIndex, string bookmarkName)
         {
-            Add(new Bookmark(tb, bookmarkName ?? "Bookmark " + counter, lineIndex));
+            Add(new Bookmark(tb, bookmarkName, lineIndex));
         }
 
-        public override void Add(int lineIndex)
+        private void Add(int lineIndex)
         {
             Add(new Bookmark(tb, "Bookmark " + counter, lineIndex));
+        }
+
+        public override void Add()
+        {
+            Add(tb.Selection.Start.iLine);
         }
 
         public override void Clear()
@@ -125,8 +136,7 @@ namespace FastColoredTextBoxNS
 
         public override void Add(Bookmark bookmark)
         {
-            foreach (var bm in items)
-                if (bm.LineIndex == bookmark.LineIndex)
+            if (Contains(bookmark.LineIndex))
                     return;
 
             items.Add(bookmark);
@@ -142,8 +152,13 @@ namespace FastColoredTextBoxNS
         public override bool Contains(int lineIndex)
         {
             foreach (var item in items)
+            {
                 if (item.LineIndex == lineIndex)
+                {
                     return true;
+                }
+            }
+
             return false;
         }
 
@@ -171,7 +186,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Removes bookmark by line index
         /// </summary>
-        public override bool Remove(int lineIndex)
+        private bool Remove(int lineIndex)
         {
             bool was = false;
             for (int i = 0; i < Count; i++)
@@ -184,6 +199,11 @@ namespace FastColoredTextBoxNS
             tb.Invalidate();
 
             return was;
+        }
+
+        public override bool Remove()
+        {
+            return Remove(tb.Selection.Start.iLine);
         }
 
         /// <summary>

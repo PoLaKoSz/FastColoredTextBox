@@ -13,12 +13,12 @@ namespace Tester
 
         private void btAddBookmark_Click(object sender, EventArgs e)
         {
-            fctb.Bookmarks.Add(fctb.Selection.Start.iLine);
+            fctb.Bookmarks.Add();
         }
 
         private void btRemoveBookmark_Click(object sender, EventArgs e)
         {
-            fctb.Bookmarks.Remove(fctb.Selection.Start.iLine);
+            fctb.Bookmarks.Remove();
         }
 
         private void btGo_DropDownOpening(object sender, EventArgs e)
@@ -38,9 +38,9 @@ namespace Tester
             {
                 var place = fctb.PointToPlace(e.Location);
                 if(fctb.Bookmarks.Contains(place.iLine))
-                    fctb.Bookmarks.Remove(place.iLine);
+                    fctb.Bookmarks.Remove();
                 else
-                    fctb.Bookmarks.Add(place.iLine);
+                    fctb.Bookmarks.Add();
             }
         }
     }

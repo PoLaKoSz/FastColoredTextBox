@@ -3631,19 +3631,19 @@ namespace FastColoredTextBoxNS
                     break;
 
                 case FCTBAction.UnbookmarkLine:
-                    UnbookmarkLine(Selection.Start.iLine);
+                    UnbookmarkLine();
                     break;
 
                 case FCTBAction.BookmarkLine:
-                    BookmarkLine(Selection.Start.iLine);
+                    BookmarkLine();
                     break;
 
                 case FCTBAction.GoNextBookmark:
-                    GotoNextBookmark(Selection.Start.iLine);
+                    GotoNextBookmark();
                     break;
 
                 case FCTBAction.GoPrevBookmark:
-                    GotoPrevBookmark(Selection.Start.iLine);
+                    GotoPrevBookmark();
                     break;
 
                 case FCTBAction.ClearWordLeft:
@@ -3920,8 +3920,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Scrolls to nearest bookmark or to first bookmark
         /// </summary>
-        /// <param name="iLine">Current bookmark line index</param>
-        public bool GotoNextBookmark(int iLine)
+        public bool GotoNextBookmark()
         {
             Bookmark nearestBookmark = null;
             int minNextLineIndex = int.MaxValue;
@@ -3935,7 +3934,7 @@ namespace FastColoredTextBoxNS
                     minBookmark = bookmark;
                 }
 
-                if (bookmark.LineIndex > iLine && bookmark.LineIndex < minNextLineIndex)
+                if (bookmark.LineIndex > Selection.Start.iLine && bookmark.LineIndex < minNextLineIndex)
                 {
                     minNextLineIndex = bookmark.LineIndex;
                     nearestBookmark = bookmark;
@@ -3959,8 +3958,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Scrolls to nearest previous bookmark or to last bookmark
         /// </summary>
-        /// <param name="iLine">Current bookmark line index</param>
-        public bool GotoPrevBookmark(int iLine)
+        public bool GotoPrevBookmark()
         {
             Bookmark nearestBookmark = null;
             int maxPrevLineIndex = -1;
@@ -3974,7 +3972,7 @@ namespace FastColoredTextBoxNS
                     maxBookmark = bookmark;
                 }
 
-                if (bookmark.LineIndex < iLine && bookmark.LineIndex > maxPrevLineIndex)
+                if (bookmark.LineIndex < Selection.Start.iLine && bookmark.LineIndex > maxPrevLineIndex)
                 {
                     maxPrevLineIndex = bookmark.LineIndex;
                     nearestBookmark = bookmark;
@@ -3998,18 +3996,18 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Bookmarks line
         /// </summary>
-        public virtual void BookmarkLine(int iLine)
+        public virtual void BookmarkLine()
         {
-            if (!bookmarks.Contains(iLine))
-                bookmarks.Add(iLine);
+            if (!bookmarks.Contains(Selection.Start.iLine))
+                bookmarks.Add();
         }
 
         /// <summary>
         /// Unbookmarks current line
         /// </summary>
-        public virtual void UnbookmarkLine(int iLine)
+        public virtual void UnbookmarkLine()
         {
-            bookmarks.Remove(iLine);
+            bookmarks.Remove();
         }
 
         /// <summary>
