@@ -73,6 +73,7 @@
     <Compile Include="Models\Syntaxes\HtmlSyntax.cs" />
     <Compile Include="Models\ServiceColors.cs" />
     <Compile Include="Modules\Exporter\Exporter.cs" />
+    <Compile Include="Modules\IModule.cs" />
     <Compile Include="Views\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>

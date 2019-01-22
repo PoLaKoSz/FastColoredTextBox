@@ -6,15 +6,18 @@ namespace Tester
 {
     public partial class BookmarksSample : Form
     {
-        private readonly IBookmarksManager _bookmarks;
+        private readonly BookmarksManager _bookmarks;
 
 
 
         public BookmarksSample()
         {
-            _bookmarks = new BookmarksManager(fctb);
-
             InitializeComponent();
+
+            _bookmarks = new BookmarksManager();
+            _bookmarks.Assing(fctb);
+
+            fctb.SubscribedModules.Add(_bookmarks);
         }
 
 

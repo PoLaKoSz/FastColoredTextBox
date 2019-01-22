@@ -36,6 +36,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using FastColoredTextBoxNS.Models.Syntaxes;
+using FastColoredTextBoxNS.Modules;
 using Microsoft.Win32;
 using Timer = System.Windows.Forms.Timer;
 
@@ -46,6 +47,10 @@ namespace FastColoredTextBoxNS
 	/// </summary>
 	public class FastColoredTextBox : UserControl, ISupportInitialize
     {
+        public List<IModule> SubscribedModules { get; set; }
+
+
+
         internal const int minLeftIndent = 8;
         private const int maxBracketSearchIterations = 1000;
         private const int maxLinesForFolding = 3000;
@@ -64,7 +69,6 @@ namespace FastColoredTextBoxNS
         public int TextHeight;
         public bool AllowInsertRemoveLines = true;
         private Brush backBrush;
-        private IBookmarksManager bookmarks;
         private bool caretVisible;
         private Color changedLineColor;
         private int charHeight;
@@ -125,6 +129,8 @@ namespace FastColoredTextBoxNS
         private int reservedCountOfLineNumberChars = 1;
         private int zoom = 100;
         private Size localAutoScrollMinSize;
+
+
 
         public FastColoredTextBox()
         {
@@ -192,7 +198,6 @@ namespace FastColoredTextBoxNS
             AllowDrop = true;
             FindEndOfFoldingBlockStrategy = FindEndOfFoldingBlockStrategy.Strategy1;
             VirtualSpace = false;
-            bookmarks = new BookmarksManager(this);
             BookmarkColor = Color.PowderBlue;
             ToolTip = new ToolTip();
             tooltipTimer.Interval = 500;
@@ -215,7 +220,11 @@ namespace FastColoredTextBoxNS
             timer2.Tick += timer2_Tick;
             tooltipTimer.Tick += timer3_Tick;
             middleClickScrollingTimer.Tick += middleClickScrollingTimer_Tick;
+
+            SubscribedModules = new List<IModule>();
         }
+
+
 
         private char[] autoCompleteBracketsList = { '(', ')', '{', '}', '[', ']', '"', '"', '\'', '\'' };
 
@@ -3617,14 +3626,6 @@ namespace FastColoredTextBoxNS
                     NavigateForward();
                     break;
 
-                case FCTBAction.GoNextBookmark:
-                    GotoNextBookmark();
-                    break;
-
-                case FCTBAction.GoPrevBookmark:
-                    GotoPrevBookmark();
-                    break;
-
                 case FCTBAction.ClearWordLeft:
                     if (OnKeyPressing('\b')) //KeyPress event processed key
                         break;
@@ -3895,83 +3896,7 @@ namespace FastColoredTextBoxNS
         {
             Zoom = 100;
         }
-
-        /// <summary>
-        /// Scrolls to nearest bookmark or to first bookmark
-        /// </summary>
-        public bool GotoNextBookmark()
-        {
-            Bookmark nearestBookmark = null;
-            int minNextLineIndex = int.MaxValue;
-            Bookmark minBookmark = null;
-            int minLineIndex = int.MaxValue;
-            foreach (Bookmark bookmark in bookmarks)
-            {
-                if (bookmark.LineIndex < minLineIndex)
-                {
-                    minLineIndex = bookmark.LineIndex;
-                    minBookmark = bookmark;
-                }
-
-                if (bookmark.LineIndex > Selection.Start.iLine && bookmark.LineIndex < minNextLineIndex)
-                {
-                    minNextLineIndex = bookmark.LineIndex;
-                    nearestBookmark = bookmark;
-                }
-            }
-
-            if (nearestBookmark != null)
-            {
-                nearestBookmark.DoVisible();
-                return true;
-            }
-            else if (minBookmark != null)
-            {
-                minBookmark.DoVisible();
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Scrolls to nearest previous bookmark or to last bookmark
-        /// </summary>
-        public bool GotoPrevBookmark()
-        {
-            Bookmark nearestBookmark = null;
-            int maxPrevLineIndex = -1;
-            Bookmark maxBookmark = null;
-            int maxLineIndex = -1;
-            foreach (Bookmark bookmark in bookmarks)
-            {
-                if (bookmark.LineIndex > maxLineIndex)
-                {
-                    maxLineIndex = bookmark.LineIndex;
-                    maxBookmark = bookmark;
-                }
-
-                if (bookmark.LineIndex < Selection.Start.iLine && bookmark.LineIndex > maxPrevLineIndex)
-                {
-                    maxPrevLineIndex = bookmark.LineIndex;
-                    nearestBookmark = bookmark;
-                }
-            }
-
-            if (nearestBookmark != null)
-            {
-                nearestBookmark.DoVisible();
-                return true;
-            }
-            else if (maxBookmark != null)
-            {
-                maxBookmark.DoVisible();
-                return true;
-            }
-
-            return false;
-        }
-
+        
         /// <summary>
         /// Moves selected lines down
         /// </summary>
@@ -4825,10 +4750,7 @@ namespace FastColoredTextBoxNS
             var x = LeftIndent + Paddings.Left - HorizontalScroll.Value;
             if (x < LeftIndent)
                 firstChar++;
-            //create dictionary of bookmarks
-            var bookmarksByLineIndex = new Dictionary<int, Bookmark>();
-            foreach (Bookmark item in bookmarks)
-                bookmarksByLineIndex[item.LineIndex] = item;
+
             //
             int startLine = YtoLineIndex(VerticalScroll.Value);
             int iLine;
@@ -4868,12 +4790,9 @@ namespace FastColoredTextBoxNS
                                              new RectangleF(-10, y, LeftIndent - minLeftIndent - 2 + 10, CharHeight + 1));
                 //
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                //
-                //draw bookmark
-                if (bookmarksByLineIndex.ContainsKey(iLine))
-                    bookmarksByLineIndex[iLine].Paint(e.Graphics,
-                                                      new Rectangle(LeftIndent, y, Width,
-                                                                    CharHeight*lineInfo.WordWrapStringsCount));
+
+                DrawModuleAtLine(iLine, e, lineInfo);
+                
                 //OnPaintLine event
                 if (lineInfo.VisibleState == VisibleState.Visible)
                     OnPaintLine(new PaintLineEventArgs(iLine,
@@ -5019,6 +4938,14 @@ namespace FastColoredTextBoxNS
 #endif
             //
             base.OnPaint(e);
+        }
+
+        private void DrawModuleAtLine(int lineIndex, PaintEventArgs e, LineInfo lineInfo)
+        {
+            foreach (IModule module in SubscribedModules)
+            {
+                module.OnPaint(lineIndex, e, lineInfo);
+            }
         }
 
         private void DrawMarkers(PaintEventArgs e, Pen servicePen)
@@ -7243,14 +7170,38 @@ window.status = ""#print"";
         internal void OnLineInserted(int index, int count)
         {
             if (LineInserted != null)
+            {
                 LineInserted(this, new LineInsertedEventArgs(index, count));
+                BroadcastLineInserted(index, count);
+            }
+        }
+
+        private void BroadcastLineInserted(int index, int count)
+        {
+            foreach (IModule module in SubscribedModules)
+            {
+                module.LineInserted(index, count);
+            }
         }
 
         internal void OnLineRemoved(int index, int count, List<int> removedLineIds)
         {
             if (count > 0)
+            {
                 if (LineRemoved != null)
+                {
                     LineRemoved(this, new LineRemovedEventArgs(index, count, removedLineIds));
+                    BroadcastLineRemoved(index, count, removedLineIds);
+                }
+            }
+        }
+
+        private void BroadcastLineRemoved(int index, int count, List<int> removedLineIds)
+        {
+            foreach (IModule module in SubscribedModules)
+            {
+                module.LineRemoved(index, count, removedLineIds);
+            }
         }
 
         /// <summary>

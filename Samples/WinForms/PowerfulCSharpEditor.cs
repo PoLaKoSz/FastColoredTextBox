@@ -10,6 +10,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using FastColoredTextBoxNS.Models.Syntaxes;
+using FastColoredTextBoxNS.Modules;
 
 namespace Tester
 {
@@ -43,6 +44,7 @@ namespace Tester
         }
 
 
+
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CreateTab(null);
@@ -54,7 +56,10 @@ namespace Tester
         {
             try
             {
+                var bookmarksManager = new BookmarksManager();
+
                 var tb = new FastColoredTextBox();
+                tb.SubscribedModules.Add(bookmarksManager);
                 tb.Font = new Font("Consolas", 9.75f);
                 tb.ContextMenuStrip = cmMain;
                 tb.Dock = DockStyle.Fill;
@@ -63,7 +68,7 @@ namespace Tester
                 tb.LeftPadding = 17;
 				tb.Language = new CSharpSyntax();
 				tb.AddStyle(sameWordsStyle);//same words style
-                var tab = new FATabStripItem(fileName!=null?Path.GetFileName(fileName):"[new]", tb);
+                var tab = new TabWindow(fileName!=null?Path.GetFileName(fileName):"[new]", tb, bookmarksManager);
                 tab.Tag = fileName;
                 if (fileName != null)
                     tb.OpenFile(fileName);
@@ -863,7 +868,7 @@ namespace Tester
             foreach (Control tab in tsFiles.Items)
             {
                 FastColoredTextBox tb = tab.Controls[0] as FastColoredTextBox;
-                foreach (var bookmark in tb.Bookmarks)
+                /*foreach (var bookmark in tb.Bookmarks)
                 {
                     var item = gotoButton.DropDownItems.Add(bookmark.Name + " [" + Path.GetFileNameWithoutExtension(tab.Tag as String) + "]");
                     item.Tag = bookmark;
@@ -880,7 +885,7 @@ namespace Tester
                         }
                         b.DoVisible();
                     };
-                }
+                }*/
             }
         }
 
@@ -936,5 +941,56 @@ namespace Tester
     public class TbInfo
     {
         public AutocompleteMenu popupMenu;
+    }
+
+    public class TabWindow : FATabStripItem
+    {
+        public FastColoredTextBox FastColoredTextBox { get; }
+        public BookmarksManager BookmarksManager { get; }
+
+
+
+        public TabWindow(string title, FastColoredTextBox fastColoredTextBox, BookmarksManager bookmarksManager)
+        {
+            Title = title;
+            FastColoredTextBox = fastColoredTextBox;
+            BookmarksManager = bookmarksManager;
+        }
+
+
+
+        public new void Assign(FATabStripItem item)
+        {
+            throw new Exception("Not supported anymore!");
+        }
+    }
+
+    public class TabWindowContainer : FATabStrip
+    {
+        public new List<TabWindow> Items { get; private set; }
+
+
+
+        public TabWindowContainer()
+        {
+            Items = new List<TabWindow>();
+        }
+
+
+
+        public void AddTab(TabWindow tabItem)
+        {
+            Items.Add(tabItem);
+        }
+
+        public new void AddTab(FATabStripItem tabItem)
+        {
+            throw new Exception("Not supported anymore!");
+        }
+
+        public new void AddTab(FATabStripItem tabItem, bool autoSelect)
+        {
+            throw new Exception("Not supported anymore!");
+        }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using FastColoredTextBoxNS.Modules;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace FastColoredTextBoxNS
 {
-    public interface IBookmarksManager : ICollection<Bookmark>, IDisposable
+    public interface IBookmarksManager : ICollection<Bookmark>
     {
         new IEnumerator<Bookmark> GetEnumerator();
 
@@ -26,60 +28,26 @@ namespace FastColoredTextBoxNS
     /// <summary>
     /// Collection of bookmarks
     /// </summary>
-    public class BookmarksManager : IBookmarksManager
+    public class BookmarksManager : IBookmarksManager, IModule
     {
-        protected FastColoredTextBox tb;
         protected List<Bookmark> items = new List<Bookmark>();
         protected int counter;
 
+        private Dictionary<int, Bookmark> _bookmarksByLineIndex = new Dictionary<int, Bookmark>();
+        private FastColoredTextBox _textBox;
 
 
-        public BookmarksManager(FastColoredTextBox tb)
+
+        public BookmarksManager()
         {
-            this.tb = tb;
-            tb.LineInserted += tb_LineInserted;
-            tb.LineRemoved += tb_LineRemoved;
+            _textBox = new FastColoredTextBox();
         }
 
 
 
-        protected virtual void tb_LineRemoved(object sender, LineRemovedEventArgs e)
+        public void Assing(FastColoredTextBox textBox)
         {
-            for(int i=0; i<Count; i++)
-            if (items[i].LineIndex >= e.Index)
-            {
-                if (items[i].LineIndex >= e.Index + e.Count)
-                {
-                    items[i].LineIndex = items[i].LineIndex - e.Count;
-                    continue;
-                }
-
-                var was = e.Index <= 0;
-                foreach (var b in items)
-                    if (b.LineIndex == e.Index - 1)
-                        was = true;
-
-                if(was)
-                {
-                    items.RemoveAt(i);
-                    i--;
-                }else
-                    items[i].LineIndex = e.Index - 1;
-            }
-        }
-
-        protected virtual void tb_LineInserted(object sender, LineInsertedEventArgs e)
-        {
-            for (int i = 0; i < Count; i++)
-                if (items[i].LineIndex >= e.Index)
-                {
-                    items[i].LineIndex = items[i].LineIndex + e.Count;
-                }else
-                if (items[i].LineIndex == e.Index - 1 && e.Count == 1)
-                {
-                    if(tb[e.Index - 1].StartSpacesCount == tb[e.Index - 1].Count)
-                        items[i].LineIndex = items[i].LineIndex + e.Count;
-                }
+            _textBox = textBox;
         }
 
         public IEnumerator<Bookmark> GetEnumerator()
@@ -88,20 +56,16 @@ namespace FastColoredTextBoxNS
                 yield return item;
         }
 
-        private void Add(int lineIndex, string bookmarkName)
-        {
-            Add(new Bookmark(tb, bookmarkName, lineIndex));
-        }
-
         public void Add()
         {
-            Add(tb.Selection.Start.iLine, "Bookmark " + counter);
+            Add(_textBox.Selection.Start.iLine, "Bookmark " + counter);
         }
 
         public void Clear()
         {
             items.Clear();
             counter = 0;
+            _bookmarksByLineIndex.Clear();
         }
 
         public void Add(Bookmark bookmark)
@@ -110,8 +74,9 @@ namespace FastColoredTextBoxNS
                     return;
 
             items.Add(bookmark);
+            _bookmarksByLineIndex[bookmark.LineIndex] = bookmark;
             counter++;
-            tb.Invalidate();
+            _textBox.Invalidate();
         }
 
         public bool Contains(Bookmark item)
@@ -149,7 +114,8 @@ namespace FastColoredTextBoxNS
 
         public bool Remove(Bookmark item)
         {
-            tb.Invalidate();
+            _textBox.Invalidate();
+            _bookmarksByLineIndex.Remove(item.LineIndex);
             return items.Remove(item);
         }
 
@@ -160,17 +126,108 @@ namespace FastColoredTextBoxNS
             if (items[i].LineIndex == lineIndex)
             {
                 items.RemoveAt(i);
+                    _bookmarksByLineIndex.Remove(lineIndex);
                 i--;
                 was = true;
             }
-            tb.Invalidate();
+            _textBox.Invalidate();
 
             return was;
         }
 
         public bool Remove()
         {
-            return Remove(tb.Selection.Start.iLine);
+            return Remove(_textBox.Selection.Start.iLine);
+        }
+
+        /// <summary>
+        /// Scrolls to nearest previous bookmark or to last bookmark
+        /// </summary>
+        public bool GotoPrevBookmark()
+        {
+            Bookmark nearestBookmark = null;
+            int maxPrevLineIndex = -1;
+            Bookmark maxBookmark = null;
+            int maxLineIndex = -1;
+            foreach (Bookmark bookmark in items)
+            {
+                if (bookmark.LineIndex > maxLineIndex)
+                {
+                    maxLineIndex = bookmark.LineIndex;
+                    maxBookmark = bookmark;
+                }
+
+                if (bookmark.LineIndex < _textBox.Selection.Start.iLine && bookmark.LineIndex > maxPrevLineIndex)
+                {
+                    maxPrevLineIndex = bookmark.LineIndex;
+                    nearestBookmark = bookmark;
+                }
+            }
+
+            if (nearestBookmark != null)
+            {
+                nearestBookmark.DoVisible();
+                return true;
+            }
+            else if (maxBookmark != null)
+            {
+                maxBookmark.DoVisible();
+                return true;
+            }
+
+            return false;
+        }
+
+
+
+        /// <summary>
+        /// Scrolls to nearest bookmark or to first bookmark
+        /// </summary>
+        public bool GotoNextBookmark()
+        {
+            Bookmark nearestBookmark = null;
+            int minNextLineIndex = int.MaxValue;
+            Bookmark minBookmark = null;
+            int minLineIndex = int.MaxValue;
+            foreach (Bookmark bookmark in items)
+            {
+                if (bookmark.LineIndex < minLineIndex)
+                {
+                    minLineIndex = bookmark.LineIndex;
+                    minBookmark = bookmark;
+                }
+
+                if (bookmark.LineIndex > _textBox.Selection.Start.iLine && bookmark.LineIndex < minNextLineIndex)
+                {
+                    minNextLineIndex = bookmark.LineIndex;
+                    nearestBookmark = bookmark;
+                }
+            }
+
+            if (nearestBookmark != null)
+            {
+                nearestBookmark.DoVisible();
+                return true;
+            }
+            else if (minBookmark != null)
+            {
+                minBookmark.DoVisible();
+                return true;
+            }
+
+            return false;
+        }
+
+        public void OnPaint(int lineIndex, PaintEventArgs e, LineInfo lineInfo)
+        {
+            if (_bookmarksByLineIndex.ContainsKey(lineIndex))
+            {
+                int y = lineInfo.startY - _textBox.VerticalScroll.Value;
+
+                _bookmarksByLineIndex[lineIndex].Paint(
+                    e.Graphics,
+                    new Rectangle(_textBox.LeftIndent, y, _textBox.Width, _textBox.CharHeight * lineInfo.WordWrapStringsCount));
+            }
         }
 
 
@@ -179,10 +236,55 @@ namespace FastColoredTextBoxNS
             return GetEnumerator();
         }
 
-        public void Dispose()
+
+        private void Add(int lineIndex, string bookmarkName)
         {
-            tb.LineInserted -= tb_LineInserted;
-            tb.LineRemoved -= tb_LineRemoved;
+            Add(new Bookmark(_textBox, bookmarkName, lineIndex));
+        }
+
+        public void LineInserted(int index, int count)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (items[i].LineIndex >= index)
+                {
+                    items[i].LineIndex = items[i].LineIndex + count;
+                }
+                else
+                if (items[i].LineIndex == index - 1 && count == 1)
+                {
+                    if (_textBox[index - 1].StartSpacesCount == _textBox[index - 1].Count)
+                        items[i].LineIndex = items[i].LineIndex + count;
+                }
+            } 
+        }
+
+        public void LineRemoved(int index, int count, List<int> removedLineIds)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (items[i].LineIndex >= index)
+                {
+                    if (items[i].LineIndex >= index + count)
+                    {
+                        items[i].LineIndex = items[i].LineIndex - count;
+                        continue;
+                    }
+
+                    var was = index <= 0;
+                    foreach (var b in items)
+                        if (b.LineIndex == index - 1)
+                            was = true;
+
+                    if (was)
+                    {
+                        items.RemoveAt(i);
+                        i--;
+                    }
+                    else
+                        items[i].LineIndex = index - 1;
+                }
+            }
         }
     }
 }

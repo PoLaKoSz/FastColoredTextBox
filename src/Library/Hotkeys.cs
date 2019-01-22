@@ -38,8 +38,8 @@ namespace FastColoredTextBoxNS
             this[KEYS.Shift | KEYS.Control | KEYS.U] = FCTBAction.LowerCase;
             this[KEYS.Control | KEYS.OemMinus] = FCTBAction.NavigateBackward;
             this[KEYS.Control | KEYS.Shift | KEYS.OemMinus] = FCTBAction.NavigateForward;
-            this[KEYS.Control | KEYS.N] = FCTBAction.GoNextBookmark;
-            this[KEYS.Control | KEYS.Shift | KEYS.N] = FCTBAction.GoPrevBookmark;
+            //this[KEYS.Control | KEYS.N] = FCTBAction.GoNextBookmark;
+            //this[KEYS.Control | KEYS.Shift | KEYS.N] = FCTBAction.GoPrevBookmark;
             this[KEYS.Alt | KEYS.Back] = FCTBAction.Undo;
             this[KEYS.Control | KEYS.Back] = FCTBAction.ClearWordLeft;
             this[KEYS.Insert] = FCTBAction.ReplaceMode;
@@ -173,8 +173,8 @@ namespace FastColoredTextBoxNS
         GoRightWithSelection,
         GoRight_ColumnSelectionMode,
         GoToDialog,
-        GoNextBookmark,
-        GoPrevBookmark,
+        //GoNextBookmark,
+        //GoPrevBookmark,
         GoUp,
         GoUpWithSelection,
         GoUp_ColumnSelectionMode,

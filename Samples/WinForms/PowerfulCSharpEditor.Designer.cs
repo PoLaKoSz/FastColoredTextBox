@@ -74,7 +74,7 @@
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsFiles = new FarsiLibrary.Win.FATabStrip();
+            this.tsFiles = new Tester.TabWindowContainer();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.sfdMain = new System.Windows.Forms.SaveFileDialog();
             this.ofdMain = new System.Windows.Forms.OpenFileDialog();
@@ -776,7 +776,7 @@
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
         private System.Windows.Forms.StatusStrip ssMain;
         private System.Windows.Forms.ToolStrip tsMain;
-        private FarsiLibrary.Win.FATabStrip tsFiles;
+        private Tester.TabWindowContainer tsFiles;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.SaveFileDialog sfdMain;
