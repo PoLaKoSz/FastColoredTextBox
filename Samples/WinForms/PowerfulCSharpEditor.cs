@@ -781,20 +781,6 @@ namespace Tester
             }
         }
 
-        private class IntegratedDevelopmentEnvironment
-        {
-            private readonly FastColoredTextBox _textBox;
-            private readonly IBookmarksManager _bookmarks;
-
-
-
-            public IntegratedDevelopmentEnvironment()
-            {
-                _textBox = new FastColoredTextBox();
-                _bookmarks = new BookmarksManager(_textBox);
-            }
-        }
-
         private void autoIndentSelectedTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CurrentTB.DoAutoIndent();
